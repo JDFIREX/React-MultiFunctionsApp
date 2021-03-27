@@ -1,5 +1,170 @@
 .Calendar {
+  margin-top: 5rem;
   width: 600px;
   height: auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.Calendar .Btns {
+  width: 100%;
+  height: 3rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.Calendar .Btns .btn_inner, .Calendar .Btns .btn_inner_month, .Calendar .Btns .btn_inner_year {
+  width: 40%;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.Calendar .Btns .btn_inner:hover, .Calendar .Btns .btn_inner_month:hover, .Calendar .Btns .btn_inner_year:hover {
+  background-color: #242530;
+}
+
+.Calendar .Btns .btn_inner_month, .Calendar .Btns .btn_inner_year {
+  width: 50%;
+}
+
+.Calendar .Btns .btn, .Calendar .Btns .btn_month, .Calendar .Btns .btn_year {
+  width: 15%;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  border-right: 1px solid #05031c;
+  border-left: 1px solid #05031c;
+}
+
+.Calendar .Btns .btn img, .Calendar .Btns .btn_month img, .Calendar .Btns .btn_year img {
+  height: 90%;
+}
+
+.Calendar .Btns .btn:hover, .Calendar .Btns .btn_month:hover, .Calendar .Btns .btn_year:hover {
+  background-color: #242530;
+}
+
+.Calendar .Btns .btn_month, .Calendar .Btns .btn_year {
+  width: 25%;
+}
+
+.Calendar .days {
+  width: 100%;
+  height: 3rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  border-right: 1px solid #05031c;
+  border-left: 1px solid #05031c;
+}
+
+.Calendar .days p {
+  width: calc(100% / 7);
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.Calendar .cal, .Calendar .MonthsList, .Calendar .YearsList {
+  width: 100%;
+  height: auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+}
+
+.Calendar .cal .cal_row, .Calendar .cal .Month_row, .Calendar .cal .YearRow, .Calendar .MonthsList .cal_row, .Calendar .MonthsList .Month_row, .Calendar .MonthsList .YearRow, .Calendar .YearsList .cal_row, .Calendar .YearsList .Month_row, .Calendar .YearsList .YearRow {
+  width: 100%;
+  height: 6rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+.Calendar .cal .cal_row .day, .Calendar .cal .cal_row .Month, .Calendar .cal .cal_row .Year, .Calendar .cal .Month_row .day, .Calendar .cal .Month_row .Month, .Calendar .cal .Month_row .Year, .Calendar .cal .YearRow .day, .Calendar .cal .YearRow .Month, .Calendar .cal .YearRow .Year, .Calendar .MonthsList .cal_row .day, .Calendar .MonthsList .cal_row .Month, .Calendar .MonthsList .cal_row .Year, .Calendar .MonthsList .Month_row .day, .Calendar .MonthsList .Month_row .Month, .Calendar .MonthsList .Month_row .Year, .Calendar .MonthsList .YearRow .day, .Calendar .MonthsList .YearRow .Month, .Calendar .MonthsList .YearRow .Year, .Calendar .YearsList .cal_row .day, .Calendar .YearsList .cal_row .Month, .Calendar .YearsList .cal_row .Year, .Calendar .YearsList .Month_row .day, .Calendar .YearsList .Month_row .Month, .Calendar .YearsList .Month_row .Year, .Calendar .YearsList .YearRow .day, .Calendar .YearsList .YearRow .Month, .Calendar .YearsList .YearRow .Year {
+  width: calc(100% / 7);
+  height: 100%;
+  border: 1px solid black;
+  color: black;
+  text-align: center;
+  padding-top: 5px;
+}
+
+.Calendar .cal .cal_row .not_this_month, .Calendar .cal .Month_row .not_this_month, .Calendar .cal .YearRow .not_this_month, .Calendar .MonthsList .cal_row .not_this_month, .Calendar .MonthsList .Month_row .not_this_month, .Calendar .MonthsList .YearRow .not_this_month, .Calendar .YearsList .cal_row .not_this_month, .Calendar .YearsList .Month_row .not_this_month, .Calendar .YearsList .YearRow .not_this_month {
+  color: darkgray;
+}
+
+.Calendar .cal .cal_row .currentDay, .Calendar .cal .Month_row .currentDay, .Calendar .cal .YearRow .currentDay, .Calendar .MonthsList .cal_row .currentDay, .Calendar .MonthsList .Month_row .currentDay, .Calendar .MonthsList .YearRow .currentDay, .Calendar .YearsList .cal_row .currentDay, .Calendar .YearsList .Month_row .currentDay, .Calendar .YearsList .YearRow .currentDay {
+  background-color: #121318;
+}
+
+.Calendar .MonthsList .Month_row, .Calendar .MonthsList .YearRow, .Calendar .YearsList .Month_row, .Calendar .YearsList .YearRow {
+  height: 3rem;
+}
+
+.Calendar .MonthsList .Month_row .Month, .Calendar .MonthsList .Month_row .Year, .Calendar .MonthsList .YearRow .Month, .Calendar .MonthsList .YearRow .Year, .Calendar .YearsList .Month_row .Month, .Calendar .YearsList .Month_row .Year, .Calendar .YearsList .YearRow .Month, .Calendar .YearsList .YearRow .Year {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: calc(100% / 4);
 }
 /*# sourceMappingURL=Calendar.css.map */

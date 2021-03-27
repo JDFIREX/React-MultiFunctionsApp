@@ -1,40 +1,80 @@
 import React, {useContext} from "react"
-import {Context} from "./../../UseReducer"
-import leftClick from "./../../images"
-import rightClick from "./../../images"
-import leftDoubleClick from "./../../images"
-import rightDoubleClick from "./../../images"
+import {Context,GetMonthName} from "./../../UseReducer"
+import leftClick from "./../../images/leftClick.svg"
+import rightClick from "./../../images/rightClick.svg"
+import leftDoubleClick from "./../../images/leftDoubleClick.svg"
+import rightDoubleClick from "./../../images/rightDoubleClick.svg"
+import "./Calendar.css"
+import GenerateCal from "./GenerateCal"
+import GenerateMonths from "./GenerateMonths"
+import GenerateYears from "./GenerateYears"
 
 const Btns = ({show,inner,dispatch}) => {
         if(show === "days"){
             return (
-                <div className="Btns_days" >
+                <div className="Btns" >
                     <div  className="btn" onClick={() => dispatch({type: "YEAR DEC"})}>
                         <img src={leftDoubleClick}  alt="Year dec"/>
                     </div>
-                    <div className="btn">
-                        <img src={leftClick}  alt="Month dec" onClick={() => dispatch({type: "MONTH DEC"})}/>
+                    <div className="btn" onClick={() => dispatch({type: "MONTH DEC"})}>
+                        <img src={leftClick}  alt="Month dec"/>
                     </div>
-                    <div className="btn_inner" onClick={() => dispatch({type: "CHANGE SHOW"})}>
+                    <div className="btn_inner" onClick={() => dispatch({type: "CHANGE SHOW"})} >
                         <p>{inner}</p>
                     </div>
-                    <div className="btn">
-                        <img src={rightClick} alt="Month Inc" onClick={() => dispatch({type: "MONTH INC"})}/>
+                    <div className="btn" onClick={() => dispatch({type: "MONTH INC"})}>
+                        <img src={rightClick} alt="Month Inc"  />
                     </div>
-                    <div className="btn">
-                        <img src={rightDoubleClick}  alt="Year Inc" onClick={() => dispatch({type: "YEAR INC"})}/>
+                    <div className="btn" onClick={() => dispatch({type: "YEAR INC"})}>
+                        <img src={rightDoubleClick}  alt="Year Inc" />
+                    </div>
+                </div>
+            )
+        }else if (show === "months") {
+            return (
+                <div className="Btns" >
+                    <div  className="btn_month" onClick={() => dispatch({type: "ONLYYEAR DEC"})}>
+                        <img src={leftDoubleClick}  alt="Year dec"/>
+                    </div>
+                    <div className="btn_inner_month" onClick={() => dispatch({type: "CHANGE SHOW"})} >
+                        <p>{inner}</p>
+                    </div>
+                    <div className="btn_month" onClick={() => dispatch({type: "ONLYYEAR INC"})}>
+                        <img src={rightDoubleClick}  alt="Year Inc" />
+                    </div>
+                </div>
+            )
+        }
+        else if (show === "years") {
+            return (
+                <div className="Btns" >
+                    <div  className="btn_year" onClick={() => dispatch({type: "YEARPART DEC"})}>
+                        <img src={leftDoubleClick}  alt="Year dec"/>
+                    </div>
+                    <div className="btn_inner_year" >
+                        <p>{inner}</p>
+                    </div>
+                    <div className="btn_year" onClick={() => dispatch({type: "YEARPART INC"})}>
+                        <img src={rightDoubleClick}  alt="Year Inc" />
                     </div>
                 </div>
             )
         }
 }
 
-
-
-
-
-
-
+const Days = () => {
+    return (
+        <div className="days">
+            <p>Mon</p>
+            <p>Thue</p>
+            <p>Wed</p>
+            <p>Thu</p>
+            <p>Fri</p>
+            <p>Sat</p>
+            <p>Sun</p>
+        </div>
+    )
+}
 
 const Calendar = () => {
 
@@ -43,9 +83,19 @@ const Calendar = () => {
 
     return (
         <div className="Calendar">
-            <Btns show={Calendar.show} inner={Calendar.inner} dispatch={dispatch/>
+            <Btns show={Calendar.show} inner={Calendar.inner} dispatch={dispatch} />
             {Calendar.show === "days" && <Days /> }
-            <GenerateCal />
+            {
+                Calendar.show === "days" ? (
+                    <GenerateCal />
+                ) : 
+                Calendar.show === "months" ? (
+                    <GenerateMonths />
+                ) :
+                Calendar.show === "years" && (
+                    <GenerateYears />
+                )
+            }
         </div>
     )
 
