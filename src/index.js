@@ -1,17 +1,53 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React, {useReducer} from "react"
+import ReactDOM from "react-dom"
+import {initalState,reducer,Context} from "./UseReducer"
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route
+} from "react-router-dom";
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+import Main from "./App/Main/Main"
+import Nav from "./App/Nav/Nav"
+import Calendar from "./App/Calendar/Calendar"
+import Todo from "./App/Todo/Todo"
+import Location from "./App/Location/Location"
+import Weather from "./App/Weather/Weather"
+import Clock from "./App/Clock/Clock"
+import CityList from "./App/CityList/CityList"
+import Timer from "./App/Timer/Timer"
+import "./indesc.css"
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+
+const Root = () => {
+
+    const [state,dispatch] = useReducer(reducer,initalState)
+
+    return (
+        <React.StrictMode>
+            <Context.Provider value={[state,dispatch]}>
+
+            <Router>
+                <>
+                    <Nav />
+                    <Switch>
+                        <Route exact path="/" component={Main} />
+                        <Route path="/Calendar" component={Calendar} />
+                        <Route path="/Todo" component={Todo} />
+                        <Route path="/Location" component={Location} />
+                        <Route path="/Weather" component={Weather} />
+                        <Route path="/Clock" component={Clock} />
+                        <Route path="/CityList" component={CityList} />
+                        <Route path="/Timer" component={Timer} />
+                        <Route path="*" component={Main} />
+                    </Switch>
+                </>
+                </Router>
+            </Context.Provider>
+        </React.StrictMode>
+    )
+}
+
+
+ReactDOM.render(<Root />, document.querySelector(".root"))
+

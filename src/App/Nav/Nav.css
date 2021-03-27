@@ -1,0 +1,84 @@
+.nav {
+  position: relative;
+  width: 100%;
+  padding: .5rem 5vw;
+  height: auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.nav h1 {
+  color: #FFDF6C;
+}
+
+.nav .showName {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: auto;
+  font-size: 1.2rem;
+  text-align: center;
+  color: black;
+  font-weight: bold;
+  padding: .3rem 1rem;
+  border-radius: 10px;
+  border-top-right-radius: 1px;
+  background-color: #FFDF6C;
+}
+
+.nav .showName::before {
+  content: '';
+  position: absolute;
+  top: -20px;
+  right: 0px;
+  border-right: 10px solid transparent;
+  border-left: 10px solid transparent;
+  border-bottom: 20px solid #FFDF6C;
+}
+
+.nav .nav_list {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.nav .nav_list .nav_item {
+  margin: 0 .5rem;
+  width: 2rem;
+  height: 2rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  z-index: 2;
+}
+
+.nav .nav_list .nav_item img {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+/*# sourceMappingURL=Nav.css.map */
