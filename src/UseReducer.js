@@ -64,9 +64,9 @@ export const initalState = {
         YearPart : [2019,2030],
         inner : `${GetMonthName(date.getMonth() + 1)} ${date.getFullYear()}`,
         addEvent : false,
-        DayEvents : [
-            
-        ]
+        DayEvents : {
+
+        }
     },
     Todo : {
         logo: 3,
@@ -304,6 +304,21 @@ export const reducer = (state,action) => {
                 Calendar : {
                     ...state.Calendar,
                     addEvent : !state.Calendar.addEvent
+                }
+            }
+        // ADDNEWEVENT
+        case "ADDNEWEVENT" : 
+            let newEvent = state.Calendar.DayEvents
+            if(!newEvent[action.day]){
+                newEvent[action.day] = []
+            }
+            newEvent[action.day].push(action.event)
+            return {
+                ...state,
+                Calendar : {
+                    ...state.Calendar,
+                    addEvent : !state.Calendar.addEvent,
+                    DayEvents : newEvent
                 }
             }
         default :

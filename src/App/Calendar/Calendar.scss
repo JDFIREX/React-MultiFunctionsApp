@@ -128,6 +128,27 @@
             height: 90%;
         }
     }
+    .SelectDayMain{
+        width: 100%;
+        height: calc(100% - 3rem);
+        border: 1px solid blue;
+        overflow-y: auto;
+
+        .SeledDayItem{
+            width: 100%;
+            height: 3rem;
+            padding: 0.2rem 0.5rem;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid green;
+
+            img{
+                height: 80%;
+            }
+        }
+    }
 }
 
 .AddNewEvent{
@@ -135,3 +156,4 @@
     height: 672px;
     border: 1px solid red
 }
+

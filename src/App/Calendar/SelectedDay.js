@@ -1,6 +1,7 @@
 import React,{useContext,useState} from "react"
 import {Context} from "./../../UseReducer"
 import plus from "./../../images/plus.svg"
+import deleteItem from "./../../images/trash.svg"
 
 export const AddNewEvent = () => {
 
@@ -9,12 +10,31 @@ export const AddNewEvent = () => {
     const [todo,setTodo] = useState(false)
     const [state,dispatch] = useContext(Context)
         
+    // console.log(state.Calendar)
 
     const ResetForm = (e) => {
         e.preventDefault()
+        setTitle("")
+        setDescription("")
+        setTodo(false)
+        dispatch({type :"TOGGLEADDEVENT"})
     }
     const SubmitForm = (e) => {
         e.preventDefault()
+
+        if(todo){
+
+        }else{
+            dispatch({type : "ADDNEWEVENT", day : `${state.Calendar.selectDay}`, event : {
+                title,
+                description,
+                id : state.Calendar.DayEvents[state.Calendar.selectDay] ? state.Calendar.DayEvents[state.Calendar.selectDay].length + 1 : 1
+            }})
+            setTitle("")
+            setDescription("")
+            setTodo(false)
+        }
+
     }
 
 
@@ -46,8 +66,9 @@ export const AddNewEvent = () => {
 
 const SelectedDayEvent = ({a,b}) => {
     return (
-        <div>
-            {a.event}
+        <div className="SeledDayItem">
+            <h2>{a.title}</h2>
+            <img src={deleteItem} alt="delete  item" />
         </div>
     )
 }

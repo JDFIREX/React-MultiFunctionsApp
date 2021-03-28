@@ -11,6 +11,12 @@ const NotThisMonth =({x,d,f}) => {
             onClick={() => dispatch({type : "SELECTMONTHDAY", f, d})}
         >
             {x.day}
+            {
+                state.Calendar.DayEvents[d] && (
+                    <p>{state.Calendar.DayEvents[d].length}</p>
+                )
+            }
+            
     </div>
     )
 }
@@ -29,6 +35,11 @@ const Day = ({x,d,s,c}) => {
             onClick={(e) => dispatch({type : "SELECTDAY", day : d})}
         >
                 {x.day}
+                {
+                    state.Calendar.DayEvents[d] && (
+                        <p>{state.Calendar.DayEvents[d].length}</p>
+                    )
+                }
         </div>
     )
 }
