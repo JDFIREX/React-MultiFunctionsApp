@@ -18,21 +18,17 @@ const NotThisMonth =({x,d,f}) => {
 const Day = ({x,d,s,c}) => {
 
     const [state,dispatch] = useContext(Context)
-
+    let ss;
+    if(state.Calendar.selectDay === d){
+        ss = "selected"
+    }
 
     return(
         <div 
-            className={`day  ${c}`} 
-            style={s}
+            className={`day  ${c} ${ss}`} 
             onClick={(e) => dispatch({type : "SELECTDAY", day : d})}
         >
                 {x.day}
-                <br />
-                {
-                    state.Calendar.selectDay === d && (
-                        <div>wybrany </div>
-                    )
-                }
         </div>
     )
 }

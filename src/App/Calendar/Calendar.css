@@ -1,5 +1,4 @@
 .Calendar {
-  margin-top: 5rem;
   width: 600px;
   height: auto;
   display: -webkit-box;
@@ -151,6 +150,10 @@
   background-color: #121318;
 }
 
+.Calendar .cal .cal_row .selected, .Calendar .cal .Month_row .selected, .Calendar .cal .YearRow .selected, .Calendar .MonthsList .cal_row .selected, .Calendar .MonthsList .Month_row .selected, .Calendar .MonthsList .YearRow .selected, .Calendar .YearsList .cal_row .selected, .Calendar .YearsList .Month_row .selected, .Calendar .YearsList .YearRow .selected {
+  border: 1px solid red;
+}
+
 .Calendar .MonthsList .Month_row, .Calendar .MonthsList .YearRow, .Calendar .YearsList .Month_row, .Calendar .YearsList .YearRow {
   height: 3rem;
 }
@@ -166,5 +169,48 @@
       -ms-flex-pack: center;
           justify-content: center;
   width: calc(100% / 4);
+}
+
+.SelectedDay {
+  width: 500px;
+  height: 672px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border: 1px solid red;
+  margin-right: 5rem;
+}
+
+.SelectedDay .Options {
+  width: 100%;
+  height: 3rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border-bottom: 1px solid black;
+  border-top: 1px solid black;
+}
+
+.SelectedDay .Options img {
+  height: 90%;
+}
+
+.AddNewEvent {
+  width: 600px;
+  height: 672px;
+  border: 1px solid red;
 }
 /*# sourceMappingURL=Calendar.css.map */

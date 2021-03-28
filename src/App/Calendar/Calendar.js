@@ -1,5 +1,5 @@
 import React, {useContext} from "react"
-import {Context,GetMonthName} from "./../../UseReducer"
+import {Context} from "./../../UseReducer"
 import leftClick from "./../../images/leftClick.svg"
 import rightClick from "./../../images/rightClick.svg"
 import leftDoubleClick from "./../../images/leftDoubleClick.svg"
@@ -8,6 +8,7 @@ import "./Calendar.css"
 import GenerateCal from "./GenerateCal"
 import GenerateMonths from "./GenerateMonths"
 import GenerateYears from "./GenerateYears"
+import {SelectedDay,AddNewEvent} from "./SelectedDay"
 
 const Btns = ({show,inner,dispatch}) => {
         if(show === "days"){
@@ -82,21 +83,34 @@ const Calendar = () => {
     const Calendar = state.Calendar;
 
     return (
-        <div className="Calendar">
-            <Btns show={Calendar.show} inner={Calendar.inner} dispatch={dispatch} />
-            {Calendar.show === "days" && <Days /> }
-            {
-                Calendar.show === "days" ? (
-                    <GenerateCal />
-                ) : 
-                Calendar.show === "months" ? (
-                    <GenerateMonths />
-                ) :
-                Calendar.show === "years" && (
-                    <GenerateYears />
-                )
-            }
-        </div>
+        <>
+        <SelectedDay />
+
+        {
+            state.Calendar.addEvent ? (
+                <AddNewEvent />
+            ) : (
+                <div className="Calendar">
+                    <Btns show={Calendar.show} inner={Calendar.inner} dispatch={dispatch} />
+                    {Calendar.show === "days" && <Days /> }
+                    {
+                        Calendar.show === "days" ? (
+                            <GenerateCal />
+                        ) : 
+                        Calendar.show === "months" ? (
+                            <GenerateMonths />
+                        ) :
+                        Calendar.show === "years" && (
+                            <GenerateYears />
+                        )
+                    }
+                </div>
+            )
+        }
+
+        
+
+        </>
     )
 
 }

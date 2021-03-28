@@ -30,17 +30,19 @@ const Root = () => {
             <Router>
                 <>
                     <Nav />
-                    <Switch>
-                        <Route exact path="/" component={Main} />
-                        <Route path="/Calendar" component={Calendar} />
-                        <Route path="/Todo" component={Todo} />
-                        <Route path="/Location" component={Location} />
-                        <Route path="/Weather" component={Weather} />
-                        <Route path="/Clock" component={Clock} />
-                        <Route path="/CityList" component={CityList} />
-                        <Route path="/Timer" component={Timer} />
-                        <Route path="*" component={Main} />
-                    </Switch>
+                    <div className="Container">
+                        <Switch>
+                            <Route exact path="/" component={Main} />
+                            <Route path="/Calendar" component={Calendar} />
+                            <Route path="/Todo" component={Todo} />
+                            <Route path="/Location" component={Location} />
+                            <Route path="/Weather" component={Weather} />
+                            <Route path="/Clock" component={Clock} />
+                            <Route path="/CityList" component={CityList} />
+                            <Route path="/Timer" component={Timer} />
+                            <Route path="*" component={Main} />
+                        </Switch>
+                    </div>
                 </>
                 </Router>
             </Context.Provider>

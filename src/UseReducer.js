@@ -17,7 +17,6 @@ export const Logos = [CalendarLogo,
 
 const date = new Date()
 
-
 export const GetMonthName = (m) => {
     switch(m){
         case 1 :
@@ -64,9 +63,10 @@ export const initalState = {
         daysInMonth : new Date(date.getFullYear(),date.getMonth() + 1,0).getDate(),
         YearPart : [2019,2030],
         inner : `${GetMonthName(date.getMonth() + 1)} ${date.getFullYear()}`,
-        DayEvents : {
-
-        }
+        addEvent : false,
+        DayEvents : [
+            
+        ]
     },
     Todo : {
         logo: 3,
@@ -295,6 +295,15 @@ export const reducer = (state,action) => {
                     show : "months",
                     Year : action.YearID,
                     inner : `${action.YearID}`
+                }
+            }
+        // SHOWADDEVENT
+        case "TOGGLEADDEVENT" :
+            return {
+                ...state,
+                Calendar : {
+                    ...state.Calendar,
+                    addEvent : !state.Calendar.addEvent
                 }
             }
         default :
