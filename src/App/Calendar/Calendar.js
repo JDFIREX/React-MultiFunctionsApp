@@ -8,7 +8,7 @@ import "./Calendar.css"
 import GenerateCal from "./GenerateCal"
 import GenerateMonths from "./GenerateMonths"
 import GenerateYears from "./GenerateYears"
-import {SelectedDay,AddNewEvent} from "./SelectedDay"
+import {SelectedDay,AddNewEvent,DescriptionEvent} from "./SelectedDay"
 
 const Btns = ({show,inner,dispatch}) => {
         if(show === "days"){
@@ -89,6 +89,9 @@ const Calendar = () => {
         {
             state.Calendar.addEvent ? (
                 <AddNewEvent />
+            ) : 
+            state.Calendar.DescriptionEvent && state.Calendar.selectedDescriptionEvent ? (
+                <DescriptionEvent />
             ) : (
                 <div className="Calendar">
                     <Btns show={Calendar.show} inner={Calendar.inner} dispatch={dispatch} />

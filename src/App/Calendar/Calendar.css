@@ -219,6 +219,7 @@
   width: 100%;
   height: 3rem;
   padding: 0.2rem 0.5rem;
+  z-index: 20;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -237,9 +238,16 @@
 
 .SelectedDay .SelectDayMain .SeledDayItem img {
   height: 80%;
+  z-index: 20;
 }
 
 .AddNewEvent {
+  width: 600px;
+  height: 672px;
+  border: 1px solid red;
+}
+
+.DescriptionDay {
   width: 600px;
   height: 672px;
   border: 1px solid red;

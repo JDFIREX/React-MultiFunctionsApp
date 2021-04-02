@@ -63,7 +63,10 @@ export const initalState = {
         daysInMonth : new Date(date.getFullYear(),date.getMonth() + 1,0).getDate(),
         YearPart : [2019,2030],
         inner : `${GetMonthName(date.getMonth() + 1)} ${date.getFullYear()}`,
+        eventId : 0,
         addEvent : false,
+        DescriptionEvent : false,
+        selectedDescriptionEvent : null,
         DayEvents : {
 
         }
@@ -303,7 +306,9 @@ export const reducer = (state,action) => {
                 ...state,
                 Calendar : {
                     ...state.Calendar,
-                    addEvent : !state.Calendar.addEvent
+                    addEvent : !state.Calendar.addEvent,
+                    DescriptionEvent : false,
+                    selectedDescriptionEvent : null,
                 }
             }
         // ADDNEWEVENT
@@ -313,14 +318,91 @@ export const reducer = (state,action) => {
                 newEvent[action.day] = []
             }
             newEvent[action.day].push(action.event)
-            return {
-                ...state,
-                Calendar : {
-                    ...state.Calendar,
-                    addEvent : !state.Calendar.addEvent,
-                    DayEvents : newEvent
+
+        return {
+            ...state,
+            Calendar : {
+                ...state.Calendar,
+                addEvent : !state.Calendar.addEvent,
+                eventId : action.event.id,
+                DescriptionEvent : false,
+                selectedDescriptionEvent : null,
+                DayEvents : newEvent
+            }
+        }
+
+        // SELECTEVENT
+        case "SELECTEVENT" :
+
+        let sde;
+        let open = true;
+        if(state.Calendar.selectedDescriptionEvent){
+            state.Calendar.selectedDescriptionEvent.id === action.id ? open = false : open = true
+        }
+        state.Calendar.DayEvents[state.Calendar.selectDay].forEach(a => a.id === action.id ? sde = a : null )
+        if(!open){
+            sde = null;
+        }
+
+        return {
+            ...state,
+            Calendar : {
+                ...state.Calendar,
+                DescriptionEvent : open,
+                selectedDescriptionEvent :sde
+            }
+        }
+
+        //SUBMITEDITEVENT
+        case "SUBMITEDITEVENT" :
+
+        let submiteditevent = state.Calendar.DayEvents[action.day].map(a => {
+            if(a.id === action.event.id){
+                return action.event
+            }else return a;
+        })
+
+        return {
+            ...state,
+            Calendar : {
+                ...state.Calendar,
+                DescriptionEvent : false,
+                DayEvents : {
+                    ...state.Calendar.DayEvents,
+                    [action.day] : submiteditevent
                 }
             }
+        }
+        // DELETEEVENT
+        case "DELETEEVENT" :
+
+        let eventsafterdelete = state.Calendar.DayEvents[state.Calendar.selectDay].filter(a => a.id !== action.id);
+
+        return {
+            ...state,
+            Calendar : {
+                ...state.Calendar,
+                selectedDescriptionEvent : null,
+                DescriptionEvent : false,
+                DayEvents : {
+                    ...state.Calendar.DayEvents,
+                    [state.Calendar.selectDay] : eventsafterdelete
+                }
+            }
+        }
+
+        //TOGGLEDESCRIPTIONEVENT
+        case "TOGGLEDESCRIPTIONEVENT" :
+
+        return {
+            ...state,
+            Calendar : {
+                ...state.Calendar,
+                addEvent : false,
+                DescriptionEvent : false,
+                selectedDescriptionEvent : null,
+            }
+        }
         default :
             return;
     }
