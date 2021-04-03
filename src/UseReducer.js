@@ -73,15 +73,9 @@ export const initalState = {
     },
     Todo : {
         logo: 3,
-        TodoList : {
-
-        },
-        TodoInProgress : {
-            
-        },
-        TodoFinished : {
-
-        }
+        "normal" : [],
+        "durning work" : [],
+        "finished" : []
     },
     Location : {
         logo : 4,
@@ -314,10 +308,44 @@ export const reducer = (state,action) => {
         // ADDNEWEVENT
         case "ADDNEWEVENT" : 
             let newEvent = state.Calendar.DayEvents
+            let actionevent = action.event;
+            if(actionevent.todoSet === "" && actionevent.todo){
+                actionevent.todo = false;
+            }
             if(!newEvent[action.day]){
                 newEvent[action.day] = []
             }
             newEvent[action.day].push(action.event)
+
+            let neweventstate = {
+                ...state,
+                Calendar : {
+                    ...state.Calendar,
+                    addEvent : !state.Calendar.addEvent,
+                    eventId : action.event.id,
+                    DescriptionEvent : false,
+                    selectedDescriptionEvent : null,
+                    DayEvents : newEvent
+                }
+            }
+            if(action.event.todo){
+                let todosetlist;
+                if(neweventstate.Todo[action.event.todoSet]){
+                    todosetlist = []
+                }else {
+                    todosetlist = neweventstate.Todo[action.event.todoSet]
+                }
+                todosetlist.push(action.event)
+                neweventstate = {
+                    ...neweventstate,
+                    Todo : {
+                        ...neweventstate.Todo,
+                        [action.event.todoSet] : todosetlist
+                    }
+                }
+            }
+
+            return neweventstate;
 
         return {
             ...state,
@@ -334,91 +362,98 @@ export const reducer = (state,action) => {
         // SELECTEVENT
         case "SELECTEVENT" :
 
-        let sde;
-        let open = true;
-        if(state.Calendar.selectedDescriptionEvent){
-            state.Calendar.selectedDescriptionEvent.id === action.id ? open = false : open = true
-        }
-        state.Calendar.DayEvents[state.Calendar.selectDay].forEach(a => a.id === action.id ? sde = a : null )
-        if(!open){
-            sde = null;
-        }
-
-        return {
-            ...state,
-            Calendar : {
-                ...state.Calendar,
-                DescriptionEvent : open,
-                selectedDescriptionEvent :sde
+            let sde;
+            let open = true;
+            if(state.Calendar.selectedDescriptionEvent){
+                state.Calendar.selectedDescriptionEvent.id === action.id ? open = false : open = true
             }
-        }
+            state.Calendar.DayEvents[state.Calendar.selectDay].forEach(a => a.id === action.id ? sde = a : null )
+            if(!open){
+                sde = null;
+            }
+
+            return {
+                ...state,
+                Calendar : {
+                    ...state.Calendar,
+                    DescriptionEvent : open,
+                    selectedDescriptionEvent :sde
+                }
+            }
 
         //SUBMITEDITEVENT
         case "SUBMITEDITEVENT" :
 
-        let submiteditevent = state.Calendar.DayEvents[action.day].map(a => {
-            if(a.id === action.event.id){
-                return action.event
-            }else return a;
-        })
+            let submiteditevent = state.Calendar.DayEvents[action.day].map(a => {
+                if(a.id === action.event.id){
+                    return action.event
+                }else return a;
+            })
 
-        return {
-            ...state,
-            Calendar : {
-                ...state.Calendar,
-                addEvent : false,
-                DescriptionEvent : false,
-                selectedDescriptionEvent : null,
-                DayEvents : {
-                    ...state.Calendar.DayEvents,
-                    [action.day] : submiteditevent
+            let EDITEVENTstate = {
+                ...state,
+                Calendar : {
+                    ...state.Calendar,
+                    addEvent : false,
+                    DescriptionEvent : false,
+                    selectedDescriptionEvent : null,
+                    DayEvents : {
+                        ...state.Calendar.DayEvents,
+                        [action.day] : submiteditevent
+                    }
                 }
             }
-        }
+
+            if(!action.event.todo && state.Calendar.DayEvents[action.day].filter(a => a.id === action.event.id)[0].todo){
+                console.log(action.event.todo, state.Calendar.DayEvents[action.day].filter(a => a.id === action.event.id)[0].todo)
+                // tu skonczylem
+            }
+
+
         // DELETEEVENT
         case "DELETEEVENT" :
 
-        let eventsafterdelete = state.Calendar.DayEvents[state.Calendar.selectDay].filter(a => a.id !== action.id);
+            let eventsafterdelete = state.Calendar.DayEvents[state.Calendar.selectDay].filter(a => a.id !== action.id);
 
-        return {
-            ...state,
-            Calendar : {
-                ...state.Calendar,
-                selectedDescriptionEvent : null,
-                DescriptionEvent : false,
-                DayEvents : {
-                    ...state.Calendar.DayEvents,
-                    [state.Calendar.selectDay] : eventsafterdelete
+            return {
+                ...state,
+                Calendar : {
+                    ...state.Calendar,
+                    selectedDescriptionEvent : null,
+                    DescriptionEvent : false,
+                    DayEvents : {
+                        ...state.Calendar.DayEvents,
+                        [state.Calendar.selectDay] : eventsafterdelete
+                    }
                 }
             }
-        }
 
         //TOGGLEDESCRIPTIONEVENT
         case "TOGGLEDESCRIPTIONEVENT" :
 
-        return {
-            ...state,
-            Calendar : {
-                ...state.Calendar,
-                addEvent : false,
-                DescriptionEvent : false,
-                selectedDescriptionEvent : null,
+            return {
+                ...state,
+                Calendar : {
+                    ...state.Calendar,
+                    addEvent : false,
+                    DescriptionEvent : false,
+                    selectedDescriptionEvent : null,
+                }
             }
-        }
 
         //CHANGEORDER
         case "CHANGEORDER" :
 
-        return{
-            ...state,
-            Calendar : {
-                ...state.Calendar,
-                DayEvents : {
-                    ...state.Calendar.DayEvents,
-                    [state.Calendar.selectDay] : action.list
+            return{
+                ...state,
+                Calendar : {
+                    ...state.Calendar,
+                    DayEvents : {
+                        ...state.Calendar.DayEvents,
+                        [state.Calendar.selectDay] : action.list
+                    }
                 }
             }
-        }
         default :
             return;
     }

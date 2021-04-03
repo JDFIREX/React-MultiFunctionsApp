@@ -238,6 +238,8 @@ export const SelectedDay =() => {
 
     const [state,dispatch] = useContext(Context)
 
+    console.log(state)
+
     const DragEnd = (e) => {
         let is = e.source.index;
         let ie = e.destination.index;
