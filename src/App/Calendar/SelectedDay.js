@@ -2,6 +2,7 @@ import React,{useContext,useState,useEffect} from "react"
 import {Context} from "./../../UseReducer"
 import plus from "./../../images/plus.svg"
 import deleteItem from "./../../images/trash.svg"
+import {DragDropContext,Droppable, Draggable} from "react-beautiful-dnd"
 
 export const AddNewEvent = () => {
 
@@ -11,7 +12,6 @@ export const AddNewEvent = () => {
     const [todoSet, setTodoSet ] = useState("")
     const [state,dispatch] = useContext(Context)
         
-    // console.log(state.Calendar)
 
     const ResetForm = (e) => {
         e.preventDefault()
@@ -23,31 +23,18 @@ export const AddNewEvent = () => {
     const SubmitForm = (e) => {
         e.preventDefault()
 
-        if(todo && todoSet !== ""){
-            dispatch({type : "ADDNEWEVENTANDTODO", day : `${state.Calendar.selectDay}`, event : {
-                title,
-                description,
-                id : (state.Calendar.eventId + 1),
-                todo,
-                todoSet
-            }})
-            setTitle("")
-            setDescription("")
-            setTodoSet("")
-            setTodo(false)
-        }else{
-            dispatch({type : "ADDNEWEVENT", day : `${state.Calendar.selectDay}`, event : {
-                title,
-                description,
-                id : (state.Calendar.eventId + 1),
-                todo,
-                todoSet
-            }})
-            setTitle("")
-            setDescription("")
-            setTodoSet("")
-            setTodo(false)
-        }
+        dispatch({type : "ADDNEWEVENT", day : `${state.Calendar.selectDay}`, event : {
+            title,
+            description,
+            id : (state.Calendar.eventId + 1),
+            todo,
+            todoSet
+        }})
+        setTitle("")
+        setDescription("")
+        setTodoSet("")
+        setTodo(false)
+        
 
     }
 
@@ -97,7 +84,6 @@ export const AddNewEvent = () => {
 export const DescriptionEvent= () => {
 
     const [state,dispatch] = useContext(Context)
-    console.log(state)
     const [edit,setEdit] = useState(false)
     const [title,setTitle] = useState(state.Calendar.selectedDescriptionEvent.title)
     const [description,setDescription] = useState(state.Calendar.selectedDescriptionEvent.description)
@@ -124,24 +110,21 @@ export const DescriptionEvent= () => {
     const SubmitEdit = (e) => {
         e.preventDefault()
 
-        if(todo){
-// tu skonczylem
-        }else{
-            dispatch({
-                type : "SUBMITEDITEVENT", 
-                day : `${state.Calendar.selectDay}`, 
-                event : {
-                    title,
-                    description,
-                    id : state.Calendar.selectedDescriptionEvent.id,
-                    todo,
-                    todoSet
-                }
-            })
-            setTitle("")
-            setDescription("")
-            setTodo(false)
-        }
+        dispatch({
+            type : "SUBMITEDITEVENT", 
+            day : `${state.Calendar.selectDay}`, 
+            event : {
+                title,
+                description,
+                id : state.Calendar.selectedDescriptionEvent.id,
+                todo,
+                todoSet
+            }
+        })
+        setTitle("")
+        setDescription("")
+        setTodo(false)
+        setTodoSet("")
     }
 
     return (
@@ -153,6 +136,7 @@ export const DescriptionEvent= () => {
                 <h1>Title : {state.Calendar.selectedDescriptionEvent.title}</h1>
                 <h1>Description : {state.Calendar.selectedDescriptionEvent.description}</h1>
                 <h1>todo : {state.Calendar.selectedDescriptionEvent.todo === false ? "false" : "true"}</h1>
+                <h1>todoSet : {state.Calendar.selectedDescriptionEvent.todoSet}</h1>
                 <button
                     onClick={() => setEdit(!edit)}
                 >Edit</button>
@@ -224,18 +208,28 @@ const SelectedDayEvent = ({a,b,dispatch}) => {
 
     return (
         //
-        <div className="SeledDayItem"
-            onClick={() => dispatch({
-                type : "SELECTEVENT",
-                id : a.id
-            })}
-        >
-            <h2>{a.title}</h2>
-            <img src={deleteItem} alt="delete  item" onClick={() => dispatch({
-                type : "DELETEEVENT",
-                id : a.id
-            })} />
-        </div>
+        <Draggable draggableId={`${a.id}`} index={b}>
+            {
+                (provided) => (
+                    <div 
+                        className="SeledDayItem"
+                        onClick={() => dispatch({
+                            type : "SELECTEVENT",
+                            id : a.id
+                        })}
+                        {...provided.dragHandleProps}
+                        {...provided.draggableProps}
+                        ref={provided.innerRef}
+                    >
+                        <h2>{a.title}</h2>
+                        <img src={deleteItem} alt="delete  item" onClick={() => dispatch({
+                            type : "DELETEEVENT",
+                            id : a.id
+                        })} />
+                    </div>
+                )
+            }
+        </Draggable>
     )
 }
 
@@ -243,6 +237,25 @@ const SelectedDayEvent = ({a,b,dispatch}) => {
 export const SelectedDay =() => {
 
     const [state,dispatch] = useContext(Context)
+
+    const DragEnd = (e) => {
+        let is = e.source.index;
+        let ie = e.destination.index;
+
+
+        if(is === ie){
+            return;
+        }
+
+        let item = state.Calendar.DayEvents[state.Calendar.selectDay][is]
+        let newList = state.Calendar.DayEvents[state.Calendar.selectDay].filter((a,b) => b !== is)
+        newList.splice(ie,0,item);
+        dispatch({
+            type : "CHANGEORDER",
+            list : newList
+        })
+
+    }
 
 
     return (
@@ -252,13 +265,27 @@ export const SelectedDay =() => {
             <div className="Options" onClick={() => dispatch({type :"TOGGLEADDEVENT"})}>
                 <img src={plus} alt="add new event" />
             </div>
-            <div className="SelectDayMain" onClick={(e) => e.target.classList[0] === "SelectDayMain" ? dispatch({type : "TOGGLEDESCRIPTIONEVENT"}) : null} > 
+            <DragDropContext onDragEnd={DragEnd} >
+                <Droppable droppableId={"1"}>
                 {
-                    state.Calendar.DayEvents[state.Calendar.selectDay] && state.Calendar.DayEvents[state.Calendar.selectDay].map((a,b) => {
-                        return <SelectedDayEvent a={a} key={`${state.Calendar.selectDay}-Event-${a.id}`} dispatch={dispatch} />
-                    })
+                    (provided) => (
+                        <div 
+                            className="SelectDayMain" 
+                            onClick={(e) => e.target.classList[0] === "SelectDayMain" ? dispatch({type : "TOGGLEDESCRIPTIONEVENT"}) : null} 
+                            {...provided.droppableProps}
+                            ref={provided.innerRef}
+                        > 
+                            {
+                                state.Calendar.DayEvents[state.Calendar.selectDay] && state.Calendar.DayEvents[state.Calendar.selectDay].map((a,b) => {
+                                    return <SelectedDayEvent a={a} key={`${state.Calendar.selectDay}-Event-${a.id}`} b={b} dispatch={dispatch} />
+                                })
+                            }
+                            {provided.placeholder}
+                        </div>
+                    )
                 }
-            </div>
+                </Droppable>
+            </DragDropContext>
 
         </div>
     )

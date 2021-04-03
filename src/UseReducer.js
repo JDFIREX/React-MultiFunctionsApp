@@ -366,7 +366,9 @@ export const reducer = (state,action) => {
             ...state,
             Calendar : {
                 ...state.Calendar,
+                addEvent : false,
                 DescriptionEvent : false,
+                selectedDescriptionEvent : null,
                 DayEvents : {
                     ...state.Calendar.DayEvents,
                     [action.day] : submiteditevent
@@ -403,24 +405,18 @@ export const reducer = (state,action) => {
                 selectedDescriptionEvent : null,
             }
         }
-        // ADDNEWEVENTANDTODO
-        case "ADDNEWEVENTANDTODO" :
 
-            let newEventAndTODO = state.Calendar.DayEvents
-            if(!newEventAndTODO[action.day]){
-                newEventAndTODO[action.day] = []
-            }
-            newEventAndTODO[action.day].push(action.event)
+        //CHANGEORDER
+        case "CHANGEORDER" :
 
-        return {
+        return{
             ...state,
             Calendar : {
                 ...state.Calendar,
-                addEvent : !state.Calendar.addEvent,
-                eventId : action.event.id,
-                DescriptionEvent : false,
-                selectedDescriptionEvent : null,
-                DayEvents : newEventAndTODO
+                DayEvents : {
+                    ...state.Calendar.DayEvents,
+                    [state.Calendar.selectDay] : action.list
+                }
             }
         }
         default :
