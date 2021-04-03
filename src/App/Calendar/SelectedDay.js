@@ -8,6 +8,7 @@ export const AddNewEvent = () => {
     const [title,setTitle] = useState("")
     const [description,setDescription] = useState("")
     const [todo,setTodo] = useState(false)
+    const [todoSet, setTodoSet ] = useState("")
     const [state,dispatch] = useContext(Context)
         
     // console.log(state.Calendar)
@@ -22,17 +23,29 @@ export const AddNewEvent = () => {
     const SubmitForm = (e) => {
         e.preventDefault()
 
-        if(todo){
-
+        if(todo && todoSet !== ""){
+            dispatch({type : "ADDNEWEVENTANDTODO", day : `${state.Calendar.selectDay}`, event : {
+                title,
+                description,
+                id : (state.Calendar.eventId + 1),
+                todo,
+                todoSet
+            }})
+            setTitle("")
+            setDescription("")
+            setTodoSet("")
+            setTodo(false)
         }else{
             dispatch({type : "ADDNEWEVENT", day : `${state.Calendar.selectDay}`, event : {
                 title,
                 description,
                 id : (state.Calendar.eventId + 1),
-                todo
+                todo,
+                todoSet
             }})
             setTitle("")
             setDescription("")
+            setTodoSet("")
             setTodo(false)
         }
 
@@ -56,6 +69,22 @@ export const AddNewEvent = () => {
                     <p>Add Event to Todo List ?</p>
                     <input type="checkbox" name="todo" onChange={(e) => setTodo(e.target.checked)}/>
                 </label>
+                {
+                    todo && (
+                        <label htmlFor="set">
+                            <br />
+                            Todo set :
+                            <p>Normal</p>
+                            <input type="radio" name="set" value="normal" onChange={() => setTodoSet("normal")} />
+                            <br />
+                            <p>durning work</p>
+                            <input type="radio" name="set" value="durning work" onChange={() => setTodoSet("durning work")} />
+                            <br />
+                            <p>finished</p>
+                            <input type="radio" name="set" value="finished" onChange={() => setTodoSet("finished")} />
+                        </label>
+                    )
+                }
                 <div>
                     <button type="reset">CANCEL</button>
                     <button type="submit">SUBMIT</button>
@@ -73,6 +102,7 @@ export const DescriptionEvent= () => {
     const [title,setTitle] = useState(state.Calendar.selectedDescriptionEvent.title)
     const [description,setDescription] = useState(state.Calendar.selectedDescriptionEvent.description)
     const [todo,setTodo] = useState(state.Calendar.selectedDescriptionEvent.todo)
+    const [todoSet, setTodoSet ] = useState("")
 
 
     console.log(state.Calendar.selectedDescriptionEvent)
@@ -82,13 +112,20 @@ export const DescriptionEvent= () => {
         setTitle(state.Calendar.selectedDescriptionEvent.title)
         setDescription(state.Calendar.selectedDescriptionEvent.description)
         setTodo(state.Calendar.selectedDescriptionEvent.todo)
+        setTodoSet(state.Calendar.selectedDescriptionEvent.todoSet)
     },[state.Calendar.selectedDescriptionEvent])
+
+    useEffect(() => {
+        if(todo === false) setTodoSet("")
+    },[todo])
+
+    console.log(todoSet)
 
     const SubmitEdit = (e) => {
         e.preventDefault()
 
         if(todo){
-
+// tu skonczylem
         }else{
             dispatch({
                 type : "SUBMITEDITEVENT", 
@@ -97,7 +134,8 @@ export const DescriptionEvent= () => {
                     title,
                     description,
                     id : state.Calendar.selectedDescriptionEvent.id,
-                    todo
+                    todo,
+                    todoSet
                 }
             })
             setTitle("")
@@ -135,6 +173,42 @@ export const DescriptionEvent= () => {
                             <p>Add Event to Todo List ?</p>
                             <input type="checkbox" name="todo" onChange={(e) => setTodo(e.target.checked)} checked={todo} />
                         </label>
+                        {
+                            todo && (
+                                <label htmlFor="set">
+                                    <br />
+                                    Todo set :
+                                    <p>Normal</p>
+                                    {
+                                        todoSet === "normal" ? (
+                                            <input type="radio" name="set" value="normal" onChange={() => setTodoSet("")}  checked={true} />
+                                        ) : (
+                                            <input type="radio" name="set" value="normal" onChange={() => setTodoSet("normal")} checked={false} />
+                                        )
+                                    }
+                                    <br />
+                                    <p>durning work</p>
+                                    {
+                                        todoSet === "durning work" ? (
+                                            <input type="radio" name="set" value="durning work" onChange={() => setTodoSet("")} checked={true} />
+                                        ) : (
+                                            <input type="radio" name="set" value="durning work" onChange={() => setTodoSet("durning work")} checked={false} />
+                                        )
+                                    }
+                                    
+                                    <br />
+                                    <p>finished</p>
+                                    {
+                                        todoSet === "finished" ? (
+                                            <input type="radio" name="set" value="finished" onChange={() => setTodoSet("")} checked={true} />
+                                        ) : (
+                                            <input type="radio" name="set" value="finished" onChange={() => setTodoSet("finished")} checked={false} />
+                                        )
+                                    }
+                                    
+                                </label>
+                            )
+                        }
                         <button type="submit">save</button>
                     </form>
                 </div>
