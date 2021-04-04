@@ -27,8 +27,10 @@ export const AddNewEvent = () => {
             title,
             description,
             id : (state.Calendar.eventId + 1),
+            day : state.Calendar.selectDay,
             todo,
-            todoSet
+            todoSet,
+            isInCalendar : true
         }})
         setTitle("")
         setDescription("")
@@ -89,9 +91,9 @@ export const DescriptionEvent= () => {
     const [description,setDescription] = useState(state.Calendar.selectedDescriptionEvent.description)
     const [todo,setTodo] = useState(state.Calendar.selectedDescriptionEvent.todo)
     const [todoSet, setTodoSet ] = useState("")
+    const [InCalendar,setInCalendar] = useState(state.Calendar.selectedDescriptionEvent.isInCalendar)
 
 
-    console.log(state.Calendar.selectedDescriptionEvent)
 
     useEffect(() => {
         setEdit(false)
@@ -99,13 +101,16 @@ export const DescriptionEvent= () => {
         setDescription(state.Calendar.selectedDescriptionEvent.description)
         setTodo(state.Calendar.selectedDescriptionEvent.todo)
         setTodoSet(state.Calendar.selectedDescriptionEvent.todoSet)
+        setInCalendar(state.Calendar.selectedDescriptionEvent.isInCalendar)
     },[state.Calendar.selectedDescriptionEvent])
 
     useEffect(() => {
-        if(todo === false) setTodoSet("")
+        if(todo === false) {
+            setTodoSet("")
+            setInCalendar(true)
+        }
     },[todo])
 
-    console.log(todoSet)
 
     const SubmitEdit = (e) => {
         e.preventDefault()
@@ -117,8 +122,10 @@ export const DescriptionEvent= () => {
                 title,
                 description,
                 id : state.Calendar.selectedDescriptionEvent.id,
+                day : state.Calendar.selectDay,
                 todo,
-                todoSet
+                todoSet,
+                isInCalendar : InCalendar
             }
         })
         setTitle("")
@@ -159,6 +166,7 @@ export const DescriptionEvent= () => {
                         </label>
                         {
                             todo && (
+                                <>
                                 <label htmlFor="set">
                                     <br />
                                     Todo set :
@@ -191,6 +199,11 @@ export const DescriptionEvent= () => {
                                     }
                                     
                                 </label>
+                                <label htmlFor="inCalendar">
+                                    todo in calendar :
+                                    <input type="checkbox" name="todo" onChange={(e) => setInCalendar(e.target.checked)} checked={InCalendar} />
+                                </label>
+                                </>
                             )
                         }
                         <button type="submit">save</button>

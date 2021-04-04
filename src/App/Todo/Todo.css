@@ -1,0 +1,34 @@
+.Todo {
+  border: 1px solid blue;
+  width: 100%;
+  max-width: 1920px;
+  min-width: 1800px;
+  padding: 0 2vw;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.Todo .TodoSection {
+  border: 1px solid red;
+  width: 32%;
+  margin: 0 1rem;
+  padding: 1rem .5rem;
+}
+
+.Todo .TodoSection h1 {
+  border-bottom: 1px solid yellow;
+}
+
+.Todo .TodoSection div {
+  color: white;
+  border-bottom: 1px solid green;
+}
+/*# sourceMappingURL=Todo.css.map */

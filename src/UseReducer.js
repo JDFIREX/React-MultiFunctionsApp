@@ -330,12 +330,12 @@ export const reducer = (state,action) => {
             }
             if(action.event.todo){
                 let todosetlist;
-                if(neweventstate.Todo[action.event.todoSet]){
+                if(!neweventstate.Todo[action.event.todoSet]){
                     todosetlist = []
                 }else {
                     todosetlist = neweventstate.Todo[action.event.todoSet]
+                    todosetlist.push(action.event)
                 }
-                todosetlist.push(action.event)
                 neweventstate = {
                     ...neweventstate,
                     Todo : {
@@ -346,18 +346,6 @@ export const reducer = (state,action) => {
             }
 
             return neweventstate;
-
-        return {
-            ...state,
-            Calendar : {
-                ...state.Calendar,
-                addEvent : !state.Calendar.addEvent,
-                eventId : action.event.id,
-                DescriptionEvent : false,
-                selectedDescriptionEvent : null,
-                DayEvents : newEvent
-            }
-        }
 
         // SELECTEVENT
         case "SELECTEVENT" :
@@ -384,8 +372,13 @@ export const reducer = (state,action) => {
         //SUBMITEDITEVENT
         case "SUBMITEDITEVENT" :
 
+            let editedEvent;
             let submiteditevent = state.Calendar.DayEvents[action.day].map(a => {
                 if(a.id === action.event.id){
+                    editedEvent = a;
+                    if(action.event.todo && action.event.todoSet === ""){
+                        action.event.todo = false;
+                    }
                     return action.event
                 }else return a;
             })
@@ -403,17 +396,47 @@ export const reducer = (state,action) => {
                     }
                 }
             }
+            let newEditedTodo = EDITEVENTstate.Todo;
+            console.log(editedEvent)
+            
+            
+            if(editedEvent.todo && action.event.todo === false){
+                newEditedTodo[editedEvent.todoSet] = newEditedTodo[editedEvent.todoSet].filter(a => a.id !== action.event.id)
+            }
+            if(editedEvent.todo === false && action.event.todo){
+                newEditedTodo[action.event.todoSet].push(action.event) 
+            }
+            if(editedEvent.todo && action.event.todo){
+                newEditedTodo[editedEvent.todoSet] = newEditedTodo[editedEvent.todoSet].filter(a => a.id !== action.event.id)
+                newEditedTodo[action.event.todoSet].push(action.event) 
+            }
+            if(editedEvent.isInCalendar && action.event.isInCalendar === false){
+                EDITEVENTstate.Calendar.DayEvents[state.Calendar.selectDay] = EDITEVENTstate.Calendar.DayEvents[state.Calendar.selectDay].filter(a => a.id !== action.event.id) 
+                newEditedTodo[action.event.todoSet] = newEditedTodo[action.event.todoSet].map(a => {
+                    if(a.id === action.event.id){
+                        a.day = "";
+                        return a;
+                    }else return a;
+                })
+            }
 
-            if(!action.event.todo && state.Calendar.DayEvents[action.day].filter(a => a.id === action.event.id)[0].todo){
-                console.log(action.event.todo, state.Calendar.DayEvents[action.day].filter(a => a.id === action.event.id)[0].todo)
-                // tu skonczylem
+            return {
+                ...EDITEVENTstate,
+                Todo : newEditedTodo
             }
 
 
         // DELETEEVENT
         case "DELETEEVENT" :
 
+            let todonew = state.Todo;
+            if(state.Calendar.DayEvents[state.Calendar.selectDay].filter(a => a.id === action.id)[0].todo){
+                let todoSetnew = todonew[state.Calendar.DayEvents[state.Calendar.selectDay].filter(a => a.id === action.id)[0].todoSet].filter(a => a.id !== action.id);
+                todonew[state.Calendar.DayEvents[state.Calendar.selectDay].filter(a => a.id === action.id)[0].todoSet] = todoSetnew
+             }
+
             let eventsafterdelete = state.Calendar.DayEvents[state.Calendar.selectDay].filter(a => a.id !== action.id);
+
 
             return {
                 ...state,
@@ -425,7 +448,8 @@ export const reducer = (state,action) => {
                         ...state.Calendar.DayEvents,
                         [state.Calendar.selectDay] : eventsafterdelete
                     }
-                }
+                },
+                Todo : todonew
             }
 
         //TOGGLEDESCRIPTIONEVENT

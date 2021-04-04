@@ -51,7 +51,7 @@ const Nav = () => {
             let width = coords.width;
             let myWidth = myCoords.width;
             ShowNameRef.current.style.top = `${bottom + 25}px`
-            ShowNameRef.current.style.left = `${left - myWidth + width - 5}px`
+            ShowNameRef.current.style.left = `${left - myWidth + width - 5 + window.scrollX}px`
         }else{
             ShowNameRef.current.style.top = `0px`
             ShowNameRef.current.style.left = `-100%`;
