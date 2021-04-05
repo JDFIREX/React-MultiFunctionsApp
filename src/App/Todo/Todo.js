@@ -221,9 +221,13 @@ const EditTodo = ({setEdit,setTodoDescription}) => {
         e.preventDefault()   
         if(todo === false){
             settodoSet("")
-        } 
+        }
         if(todo === false && isInCalendar === false){
             alert("todo or todo In Calendar must be chacked")
+            settodo(Todo.selectedTodo.todo)
+            settodoSet(Todo.selectedTodo.todoSet)
+            setisInCalendar(Todo.selectedTodo.isInCalendar)
+            setDay(Todo.selectedTodo.day)
         }else {
             dispatch({
                 type : "SUBMITTODOEDIT",
@@ -238,6 +242,7 @@ const EditTodo = ({setEdit,setTodoDescription}) => {
                 }
             })
             if(todo === false){
+                settodoSet("")
                 setTodoDescription(false)
             }
             setEdit(false)

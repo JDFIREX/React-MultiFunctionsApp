@@ -493,21 +493,30 @@ export const reducer = (state,action) => {
         // SUBMITTODOEDIT
         case "SUBMITTODOEDIT" :
 
-        let submititem = action.todo
-        let currentitem = state.Todo.selectedTodo
-        let todoEditState = state;
-        console.log(submititem)
+            let submititem = action.todo
+            let currentitem = state.Todo.selectedTodo
+            let todoEditState = state;
+            let nc = todoEditState.Todo[currentitem.todoSet].filter(a => a.id !== currentitem.id)
+            let cd;
 
-        if(submititem.isInCalendar){
-            if(currentitem.isInCalendar){
-                if(submititem.day !== currentitem.day){
-                    let cd = todoEditState.Calendar.DayEvents[currentitem.day].filter(a => a.id !== currentitem.id)
+            if(todoEditState.Calendar.DayEvents[currentitem.day]) cd = todoEditState.Calendar.DayEvents[currentitem.day].filter(a => a.id !== currentitem.id)
+
+            if(submititem.isInCalendar){
+                    let i;
                     let sd = todoEditState.Calendar.DayEvents[submititem.day];
                     if(sd){
-                        sd.push(submititem)
+                        sd = sd.filter((a,b) => {
+                            if(a.id === currentitem.id) {i = b}
+                            return a.id !== currentitem.id
+                        })
+
+                        if(i || i === 0){
+                            sd.splice(i,0,submititem)
+                        }else sd.push(submititem)
                     }else {
                         sd = [submititem]
                     }
+
                     todoEditState = {
                         ...todoEditState,
                         Calendar : {
@@ -519,40 +528,7 @@ export const reducer = (state,action) => {
                             }
                         }
                     }
-                }else {
-                    let cd = todoEditState.Calendar.DayEvents[currentitem.day].map(a => a.id === currentitem.id ? submititem : a)
-                    todoEditState = {
-                        ...todoEditState,
-                        Calendar : {
-                            ...todoEditState.Calendar,
-                            DayEvents : {
-                                ...todoEditState.Calendar.DayEvents,
-                                [currentitem.day] : cd
-                            }
-                        }
-                    }
-                }
-            }else{
-                let cd = todoEditState.Calendar.DayEvents[submititem.day];
-                if(cd){
-                    cd.push(submititem)
-                }else {
-                    cd = [submititem]
-                }
-                    todoEditState = {
-                        ...todoEditState,
-                        Calendar : {
-                            ...todoEditState.Calendar,
-                            DayEvents : {
-                                ...todoEditState.Calendar.DayEvents,
-                                [submititem.day] : cd
-                            }
-                        }
-                    }
-            }
-        }else {
-            if(currentitem.isInCalendar){
-                let cd = todoEditState.Calendar.DayEvents[currentitem.day].filter(a => a.id !== currentitem.id)
+            }else {
                 todoEditState = {
                     ...todoEditState,
                     Calendar : {
@@ -564,13 +540,16 @@ export const reducer = (state,action) => {
                     }
                 }
             }
-        }
-        if(submititem.todo){
-            if(currentitem.todo){
-                if(submititem.todoSet !== currentitem.todoSet){
-                    let nc = todoEditState.Todo[currentitem.todoSet].filter(a => a.id !== currentitem.id)
-                    let l = todoEditState.Todo[submititem.todoSet];
-                    l.push(submititem)
+            if(submititem.todo){
+                    let i;
+                    let l = todoEditState.Todo[submititem.todoSet].filter((a,b) => {
+                        if(a.id === currentitem.id) {i = b}
+                        return a.id !== currentitem.id
+                    })
+                    if(i || i === 0){
+                        l.splice(i,0,submititem)
+                    }else l.push(submititem)
+
                     todoEditState = {
                         ...todoEditState,
                         Todo : {
@@ -580,39 +559,7 @@ export const reducer = (state,action) => {
                             [submititem.todoSet] : l
                         }
                     }
-                }else {
-                    let nc = todoEditState.Todo[currentitem.todoSet].map(a => a.id === currentitem.id ? submititem : a)
-                    todoEditState = {
-                        ...todoEditState,
-                        Todo : {
-                            ...todoEditState.Todo,
-                            selectedTodo : submititem,
-                            [currentitem.todoSet] : nc,
-                        }
-                    }
-                }
-            }else {
-                let l = todoEditState.Todo[submititem.todoSet];
-                l.push(submititem)
-                todoEditState = {
-                    ...todoEditState,
-                    Todo : {
-                        ...todoEditState.Todo,
-                        selectedTodo : submititem,
-                        [submititem.todoSet] : l
-                    }
-                }
-            }
-            todoEditState = {
-                ...todoEditState,
-                Todo : {
-                    ...todoEditState.Todo,
-                    selectedTodo : submititem,
-                }
-            }
-        }else{
-            if(currentitem.todo){
-                let nc = todoEditState.Todo[currentitem.todoSet].filter(a => a.id !== currentitem.id)
+            }else{
                 todoEditState = {
                     ...todoEditState,
                     Todo : {
@@ -622,11 +569,9 @@ export const reducer = (state,action) => {
                     }
                 }
             }
-        }
 
-        return todoEditState
+            return todoEditState
 
-        //TODOLISTCHANGE
         default :
             return;
     }
