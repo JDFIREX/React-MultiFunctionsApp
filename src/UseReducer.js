@@ -73,6 +73,7 @@ export const initalState = {
     },
     Todo : {
         logo: 3,
+        selectedTodo : null,
         "normal" : [],
         "durning work" : [],
         "finished" : []
@@ -425,7 +426,6 @@ export const reducer = (state,action) => {
                 Todo : newEditedTodo
             }
 
-
         // DELETEEVENT
         case "DELETEEVENT" :
 
@@ -478,6 +478,155 @@ export const reducer = (state,action) => {
                     }
                 }
             }
+
+        //select todo
+        case "SELECTTODO" :
+
+            return {
+                ...state,
+                Todo : {
+                    ...state.Todo,
+                    selectedTodo : action.todo
+                }
+            }
+
+        // SUBMITTODOEDIT
+        case "SUBMITTODOEDIT" :
+
+        let submititem = action.todo
+        let currentitem = state.Todo.selectedTodo
+        let todoEditState = state;
+        console.log(submititem)
+
+        if(submititem.isInCalendar){
+            if(currentitem.isInCalendar){
+                if(submititem.day !== currentitem.day){
+                    let cd = todoEditState.Calendar.DayEvents[currentitem.day].filter(a => a.id !== currentitem.id)
+                    let sd = todoEditState.Calendar.DayEvents[submititem.day];
+                    if(sd){
+                        sd.push(submititem)
+                    }else {
+                        sd = [submititem]
+                    }
+                    todoEditState = {
+                        ...todoEditState,
+                        Calendar : {
+                            ...todoEditState.Calendar,
+                            DayEvents : {
+                                ...todoEditState.Calendar.DayEvents,
+                                [currentitem.day] : cd,
+                                [submititem.day] :sd
+                            }
+                        }
+                    }
+                }else {
+                    let cd = todoEditState.Calendar.DayEvents[currentitem.day].map(a => a.id === currentitem.id ? submititem : a)
+                    todoEditState = {
+                        ...todoEditState,
+                        Calendar : {
+                            ...todoEditState.Calendar,
+                            DayEvents : {
+                                ...todoEditState.Calendar.DayEvents,
+                                [currentitem.day] : cd
+                            }
+                        }
+                    }
+                }
+            }else{
+                let cd = todoEditState.Calendar.DayEvents[submititem.day];
+                if(cd){
+                    cd.push(submititem)
+                }else {
+                    cd = [submititem]
+                }
+                    todoEditState = {
+                        ...todoEditState,
+                        Calendar : {
+                            ...todoEditState.Calendar,
+                            DayEvents : {
+                                ...todoEditState.Calendar.DayEvents,
+                                [submititem.day] : cd
+                            }
+                        }
+                    }
+            }
+        }else {
+            if(currentitem.isInCalendar){
+                let cd = todoEditState.Calendar.DayEvents[currentitem.day].filter(a => a.id !== currentitem.id)
+                todoEditState = {
+                    ...todoEditState,
+                    Calendar : {
+                        ...todoEditState.Calendar,
+                        DayEvents : {
+                            ...todoEditState.Calendar.DayEvents,
+                            [currentitem.day] : cd,
+                        }
+                    }
+                }
+            }
+        }
+        if(submititem.todo){
+            if(currentitem.todo){
+                if(submititem.todoSet !== currentitem.todoSet){
+                    let nc = todoEditState.Todo[currentitem.todoSet].filter(a => a.id !== currentitem.id)
+                    let l = todoEditState.Todo[submititem.todoSet];
+                    l.push(submititem)
+                    todoEditState = {
+                        ...todoEditState,
+                        Todo : {
+                            ...todoEditState.Todo,
+                            selectedTodo : submititem,
+                            [currentitem.todoSet] : nc,
+                            [submititem.todoSet] : l
+                        }
+                    }
+                }else {
+                    let nc = todoEditState.Todo[currentitem.todoSet].map(a => a.id === currentitem.id ? submititem : a)
+                    todoEditState = {
+                        ...todoEditState,
+                        Todo : {
+                            ...todoEditState.Todo,
+                            selectedTodo : submititem,
+                            [currentitem.todoSet] : nc,
+                        }
+                    }
+                }
+            }else {
+                let l = todoEditState.Todo[submititem.todoSet];
+                l.push(submititem)
+                todoEditState = {
+                    ...todoEditState,
+                    Todo : {
+                        ...todoEditState.Todo,
+                        selectedTodo : submititem,
+                        [submititem.todoSet] : l
+                    }
+                }
+            }
+            todoEditState = {
+                ...todoEditState,
+                Todo : {
+                    ...todoEditState.Todo,
+                    selectedTodo : submititem,
+                }
+            }
+        }else{
+            if(currentitem.todo){
+                let nc = todoEditState.Todo[currentitem.todoSet].filter(a => a.id !== currentitem.id)
+                todoEditState = {
+                    ...todoEditState,
+                    Todo : {
+                        ...todoEditState.Todo,
+                        selectedTodo : null,
+                        [currentitem.todoSet] : nc
+                    }
+                }
+            }
+        }
+
+        return todoEditState
+
+        //TODOLISTCHANGE
         default :
             return;
     }
