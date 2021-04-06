@@ -245,11 +245,224 @@
   width: 600px;
   height: 672px;
   border: 1px solid red;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  color: white;
+}
+
+.AddNewEvent form {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.AddNewEvent form label {
+  width: 80%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.AddNewEvent form label input, .AddNewEvent form label textarea {
+  width: 100%;
+  padding: .2rem;
+  text-align: center;
+  margin: 1rem 0;
+}
+
+.AddNewEvent form .set {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.AddNewEvent form .set div {
+  width: 12rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.AddNewEvent form .set div p {
+  position: relative;
+  width: 10rem;
+}
+
+.AddNewEvent form .set div input {
+  width: 1rem;
+  height: 1rem;
+}
+
+.AddNewEvent .btns {
+  margin-top: 2rem;
+}
+
+.AddNewEvent .btns button {
+  padding: .3rem 1rem;
+  margin: 0 1rem;
 }
 
 .DescriptionDay {
   width: 600px;
   height: 672px;
   border: 1px solid red;
+  color: white;
+}
+
+.DescriptionDay .edit form {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.DescriptionDay .edit form label {
+  width: 80%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.DescriptionDay .edit form label input, .DescriptionDay .edit form label textarea {
+  width: 100%;
+  padding: .2rem;
+  text-align: center;
+  margin: 1rem 0;
+}
+
+.DescriptionDay .edit form .set {
+  width: 100%;
+}
+
+.DescriptionDay .edit form .set div {
+  width: 13rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.DescriptionDay .edit form .set div p {
+  position: relative;
+  width: 11rem;
+}
+
+.DescriptionDay .edit form .set div input {
+  position: relative;
+  right: .25rem;
+  width: 1rem;
+  height: 1rem;
+}
+
+.DescriptionDay .edit form .inCalendar {
+  width: 12rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+.DescriptionDay .edit form .inCalendar p {
+  width: 90%;
+}
+
+.DescriptionDay .edit form .inCalendar input {
+  width: 1rem;
+}
+
+.DescriptionDay .edit button {
+  margin-top: 1rem;
+  padding: .4rem 2rem;
+}
+
+.DescriptionDay .info {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  padding: 1rem;
+}
+
+.DescriptionDay .info h1 {
+  margin: 1.5rem 0;
+}
+
+.DescriptionDay .info button {
+  width: 50%;
+  margin-left: 25%;
 }
 /*# sourceMappingURL=Calendar.css.map */

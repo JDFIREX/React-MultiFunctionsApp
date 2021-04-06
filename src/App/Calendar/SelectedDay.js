@@ -58,21 +58,29 @@ export const AddNewEvent = () => {
                 </label>
                 {
                     todo && (
-                        <label htmlFor="set">
+                        <>
+                        Todo set :
+                        <label htmlFor="set" className="set">
                             <br />
-                            Todo set :
-                            <p>Normal</p>
-                            <input type="radio" name="set" value="normal" onChange={() => setTodoSet("normal")} />
+                            <div>
+                                <p>Normal</p>
+                                <input type="radio" name="set" value="normal" onChange={() => setTodoSet("normal")} />
+                            </div>
                             <br />
-                            <p>durning work</p>
-                            <input type="radio" name="set" value="durning work" onChange={() => setTodoSet("durning work")} />
+                            <div>
+                                <p>durning work</p>
+                                <input type="radio" name="set" value="durning work" onChange={() => setTodoSet("durning work")} />
+                            </div>
                             <br />
-                            <p>finished</p>
-                            <input type="radio" name="set" value="finished" onChange={() => setTodoSet("finished")} />
+                            <div>
+                                <p>finished</p>
+                                <input type="radio" name="set" value="finished" onChange={() => setTodoSet("finished")} />
+                            </div>
                         </label>
+                        </>
                     )
                 }
-                <div>
+                <div className="btns">
                     <button type="reset">CANCEL</button>
                     <button type="submit">SUBMIT</button>
                 </div>
@@ -81,7 +89,7 @@ export const AddNewEvent = () => {
     )
 }
 const EventInfo = ({state,edit,setEdit}) => (
-    <>
+    <div className="info">
         <h1>Day : {state.Calendar.selectDay}</h1>
         <h1>Title : {state.Calendar.selectedDescriptionEvent.title}</h1>
         <h1>Description : {state.Calendar.selectedDescriptionEvent.description}</h1>
@@ -90,7 +98,7 @@ const EventInfo = ({state,edit,setEdit}) => (
         <button
             onClick={() => setEdit(!edit)}
         >Edit</button>
-    </>
+    </div>
 )
 
 export const DescriptionEvent= () => {
@@ -143,7 +151,7 @@ export const DescriptionEvent= () => {
             edit === false ? (
                 <EventInfo state={state} edit={edit} setEdit={setEdit} />
             ) : (
-                <div>
+                <div className="edit">
                     <form onSubmit={SubmitEdit}>
                         <h1>Edit day {state.Calendar.selectDay} event id {state.Calendar.selectedDescriptionEvent.id} </h1>
                         <label htmlFor="title" className="title">
@@ -161,41 +169,47 @@ export const DescriptionEvent= () => {
                         {
                             todo && (
                                 <>
-                                <label htmlFor="set">
+                                <label htmlFor="set" className="set">
                                     <br />
                                     Todo set :
-                                    <p>Normal</p>
-                                    <input 
-                                        type="radio" 
-                                        name="set" 
-                                        value="normal" 
-                                        onChange={() => setTodoSet("normal")}
-                                        checked={todoSet === "normal"} 
-                                    />
+                                    <div>
+                                        <p>Normal</p>
+                                        <input 
+                                            type="radio" 
+                                            name="set" 
+                                            value="normal" 
+                                            onChange={() => setTodoSet("normal")}
+                                            checked={todoSet === "normal"} 
+                                        />
+                                    </div>
 
                                     <br />
-                                    <p>durning work</p>
-                                    <input 
-                                        type="radio" 
-                                        name="set" 
-                                        value="durning work" 
-                                        onChange={() => setTodoSet("durning work")}
-                                        checked={todoSet === "durning work"} 
-                                    />
+                                    <div>
+                                        <p>durning work</p>
+                                        <input 
+                                            type="radio" 
+                                            name="set" 
+                                            value="durning work" 
+                                            onChange={() => setTodoSet("durning work")}
+                                            checked={todoSet === "durning work"} 
+                                        />
+                                    </div>
                                     
                                     <br />
-                                    <p>finished</p>
-                                    <input 
-                                        type="radio" 
-                                        name="set" 
-                                        value="finished" 
-                                        onChange={() => setTodoSet("finished")}
-                                        checked={todoSet === "finished"} 
-                                    />
+                                    <div>
+                                        <p>finished</p>
+                                        <input 
+                                            type="radio" 
+                                            name="set" 
+                                            value="finished" 
+                                            onChange={() => setTodoSet("finished")}
+                                            checked={todoSet === "finished"} 
+                                        />
+                                    </div>
                                     
                                 </label>
-                                <label htmlFor="inCalendar">
-                                    todo in calendar :
+                                <label htmlFor="inCalendar" className="inCalendar">
+                                    <p>todo in calendar :</p>
                                     <input type="checkbox" name="todo" onChange={(e) => setInCalendar(e.target.checked)} checked={InCalendar} />
                                 </label>
                                 </>
