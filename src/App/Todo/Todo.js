@@ -35,6 +35,28 @@ const TodoItem = ({a,b,dispatch,setTodoDescription}) => {
         </Draggable>
     )
 }
+const DroppableItem = ({Todo,item,dispatch,setTodoDescription}) => {
+    return (
+        <Droppable droppableId={item}>
+            {
+                (provided) => (
+                    <div 
+                        className="TodoSection"
+                        {...provided.droppableProps}
+                        ref={provided.innerRef}
+                    >
+                        <h1>Todo durning work</h1>
+                        {
+                            Todo[item].map((a,b ) => <TodoItem key={a.id} b={b} a={a} dispatch={dispatch} setTodoDescription={setTodoDescription} /> )
+                        }
+                        {provided.placeholder}
+                    </div>
+                )
+            }
+        </Droppable>
+    )
+}
+
 const DragDropEvent = ({setTodoDescription}) => {
 
     const [state,dispatch] = useContext(Context)
@@ -42,25 +64,19 @@ const DragDropEvent = ({setTodoDescription}) => {
 
     const DragEnd = (e) => {
 
-        console.log(e)
-
-        if(e.source.droppableId === e.destination.droppableId && e.source.index === e.destination.index){
-            return;
-        }
+        if(e.source.droppableId === e.destination.droppableId && e.source.index === e.destination.index) return;
 
         let lists = JSON.parse(JSON.stringify(Todo[e.source.droppableId]))
-        let es = e.source.index
         let liste = JSON.parse(JSON.stringify(Todo[e.destination.droppableId]))
+        let es = e.source.index
         let ee = e.destination.index;
         let item;
 
         lists = lists.filter((a,b) => {
-                    if(b !== es){
-                        return a;
-                    }else {
-                        item = a;
-                        return null;
-                    }
+                    if(b !== es)return a;
+
+                    item = a;
+                    return null;
                 })
         
         if(e.source.droppableId === e.destination.droppableId){
@@ -68,13 +84,8 @@ const DragDropEvent = ({setTodoDescription}) => {
             Todo[e.destination.droppableId] = lists;
         }else {
             item.todoSet = e.destination.droppableId
-            if(item.isInCalendar){
-                state.Calendar.DayEvents[item.day] = state.Calendar.DayEvents[item.day].map(a => {
-                    if(a.id === item.id){
-                        return item
-                    }else return a;
-                })
-            }
+            if(item.isInCalendar)
+                state.Calendar.DayEvents[item.day] = state.Calendar.DayEvents[item.day].map(a => a.id === item.id ? item : a );
             Todo[e.source.droppableId] = lists;
             liste.splice(ee,0,item)
             Todo[e.destination.droppableId] = liste;
@@ -88,61 +99,13 @@ const DragDropEvent = ({setTodoDescription}) => {
     return (
         <DragDropContext onDragEnd={DragEnd} >
             <>
-                <Droppable droppableId={"normal"}>
-                    {
-                        (provided) => (
-                            <div 
-                                className="TodoSection"
-                                {...provided.droppableProps}
-                                ref={provided.innerRef}
-                            >
-                                <h1>Todo Normal</h1>
-                                {
-                                    Todo["normal"].map((a,b ) => <TodoItem key={a.id} b={b} a={a} dispatch={dispatch} setTodoDescription={setTodoDescription} /> )
-                                }
-                                {provided.placeholder}
-                            </div>
-                        )
-                    }
-                </Droppable>
+                <DroppableItem item={"normal"} key={"normal"} Todo={Todo} dispatch={dispatch}  setTodoDescription={setTodoDescription} />
             </>
             <>
-                <Droppable droppableId={"durning work"}>
-                    {
-                        (provided) => (
-                            <div 
-                                className="TodoSection"
-                                {...provided.droppableProps}
-                                ref={provided.innerRef}
-                            >
-                                <h1>Todo durning work</h1>
-                                {
-                                    Todo["durning work"].map((a,b ) => <TodoItem key={a.id} b={b} a={a} dispatch={dispatch} setTodoDescription={setTodoDescription} /> )
-                                }
-                                {provided.placeholder}
-                            </div>
-                        )
-                    }
-                </Droppable>
+                <DroppableItem item={"durning work"} key={"durning work"} Todo={Todo} dispatch={dispatch}  setTodoDescription={setTodoDescription} />
             </>
             <>
-                <Droppable droppableId={"finished"}>
-                    {
-                        (provided) => (
-                            <div 
-                                className="TodoSection"
-                                {...provided.droppableProps}
-                                ref={provided.innerRef}
-                            >
-                                <h1>Todo finished</h1>
-                                {
-                                    Todo["finished"].map((a,b ) => <TodoItem key={a.id} b={b} a={a} dispatch={dispatch} setTodoDescription={setTodoDescription} /> )
-                                }
-                                {provided.placeholder}
-                            </div>
-                        )
-                    }
-                </Droppable>
+                <DroppableItem item={"finished"} key={"finished"} Todo={Todo} dispatch={dispatch}  setTodoDescription={setTodoDescription} />
             </>
         </DragDropContext>
     )
@@ -159,51 +122,37 @@ const EditTodo = ({setEdit,setTodoDescription}) => {
     const [day, setDay] = useState(Todo.selectedTodo.day) 
     const [cal, setCal] = useState()
 
+    const GetDay = (d,s) => {
+        d = d.split("-")
+        let m = d[1];
+        let dd = d[2]
+        m = m.split("")
+        dd = dd.split("")
+        if(s === "unshift"){
+            if(m[0] !== "0" && m.length === 1) m.unshift("0")
+            if(dd[0] !== "0" && dd.length === 1) dd.unshift("0")
+        }else {
+            if(m[0] === "0" && m.length === 2) m.shift()
+            if(dd[0] === "0" && dd.length === 2) dd.shift()
+        }
+        m = m.join("")
+        dd = dd.join("")
+        d[1] = m;
+        d[2] = dd;
+        d = d.join("-")
+        return d;
+    }
 
     useEffect(() => {
         let d;
-        if(!day){
-            d = state.Calendar.currentDay
-        }else{
-            d = day;
-        }
-        d = d.split("-")
-        let m = d[1];
-        let dd = d[2]
-        m = m.split("")
-        dd = dd.split("")
-        if(m[0] !== "0" && m.length === 1){
-            m.unshift("0")
-        }
-        if(dd[0] !== "0" && dd.length === 1){
-            dd.unshift("0")
-        }
-        m = m.join("")
-        dd = dd.join("")
-        d[1] = m;
-        d[2] = dd;
-        d = d.join("-")
+        !day ? d = state.Calendar.currentDay : d = day
+        d = GetDay(d,"unshift")
         setCal(d)
     }, [day,state.Calendar.currentDay,cal])
 
-    const ChangeDay = (e) => {
+    const ChangeDay = (e,) => {
         let d = e.target.value;
-        d = d.split("-")
-        let m = d[1];
-        let dd = d[2]
-        m = m.split("")
-        dd = dd.split("")
-        if(m[0] === "0" && m.length === 2){
-            m.shift()
-        }
-        if(dd[0] === "0" && dd.length === 2){
-            dd.shift()
-        }
-        m = m.join("")
-        dd = dd.join("")
-        d[1] = m;
-        d[2] = dd;
-        d = d.join("-")
+        d = GetDay(d,"shift")
         setDay(d)
     }
 
@@ -218,10 +167,7 @@ const EditTodo = ({setEdit,setTodoDescription}) => {
     }
 
     const SubmitEdit = (e) => {
-        e.preventDefault()   
-        if(todo === false){
-            settodoSet("")
-        }
+        (todo === false) && settodoSet("")
         if(todo === false && isInCalendar === false){
             alert("todo or todo In Calendar must be chacked")
             settodo(Todo.selectedTodo.todo)
@@ -241,10 +187,7 @@ const EditTodo = ({setEdit,setTodoDescription}) => {
                     isInCalendar
                 }
             })
-            if(todo === false){
-                settodoSet("")
-                setTodoDescription(false)
-            }
+            if(todo === false) setTodoDescription(false)
             setEdit(false)
         }
     }
@@ -285,32 +228,33 @@ const EditTodo = ({setEdit,setTodoDescription}) => {
                             <br />
                             Todo set :
                             <p>Normal</p>
-                            {
-                                todoSet === "normal" ? (
-                                    <input type="radio" name="set" value="normal" onChange={() => settodoSet("")}  checked={true} />
-                                ) : (
-                                    <input type="radio" name="set" value="normal" onChange={() => settodoSet("normal")} checked={false} />
-                                )
-                            }
+                            <input 
+                                type="radio" 
+                                name="set" 
+                                value="normal" 
+                                onChange={() => settodoSet("normal")}  
+                                checked={todoSet === "normal"} 
+                            />
+
                             <br />
                             <p>durning work</p>
-                            {
-                                todoSet === "durning work" ? (
-                                    <input type="radio" name="set" value="durning work" onChange={() => settodoSet("")} checked={true} />
-                                ) : (
-                                    <input type="radio" name="set" value="durning work" onChange={() => settodoSet("durning work")} checked={false} />
-                                )
-                            }
-                            
+                            <input 
+                                type="radio" 
+                                name="set" 
+                                value="durning work" 
+                                onChange={() => settodoSet("durning work")}  
+                                checked={todoSet === "durning work"} 
+                            />
+        
                             <br />
                             <p>finished</p>
-                            {
-                                todoSet === "finished" ? (
-                                    <input type="radio" name="set" value="finished" onChange={() => settodoSet("")} checked={true} />
-                                ) : (
-                                    <input type="radio" name="set" value="finished" onChange={() => settodoSet("finished")} checked={false} />
-                                )
-                            }
+                            <input 
+                                type="radio" 
+                                name="set" 
+                                value="finished" 
+                                onChange={() => settodoSet("finished")}  
+                                checked={todoSet === "finished"} 
+                            />
                             
                         </label>
                         </>
@@ -325,26 +269,12 @@ const EditTodo = ({setEdit,setTodoDescription}) => {
 }
 const TodoDescription = ({Todo,setTodoDescription}) => {
 
-    const [title,setTitle] = useState(Todo.selectedTodo.title)
-    const [description,setdescription] = useState(Todo.selectedTodo.description)
-    const [todo,settodo] = useState(Todo.selectedTodo.todo)
-    const [todoSet,settodoSet] = useState(Todo.selectedTodo.todoSet)
-    const [isInCalendar,setisInCalendar] = useState(Todo.selectedTodo.isInCalendar)
     const [edit, setEdit] = useState(false)
 
     const HandleClick = () => {
         Todo.selectedTodo = null;
         setTodoDescription(false)
     }
-
-    useEffect(() => {
-       setTitle(Todo.selectedTodo.title)
-       setdescription(Todo.selectedTodo.description)
-       settodo(Todo.selectedTodo.todo)
-       settodoSet(Todo.selectedTodo.todoSet)
-       setisInCalendar(Todo.selectedTodo.isInCalendar)
-    }, [Todo])
-    console.log(Todo)
 
 
     return (
@@ -353,12 +283,12 @@ const TodoDescription = ({Todo,setTodoDescription}) => {
             !edit ? (
                 <>
                 <h1>Todo Description id {Todo.selectedTodo.id} </h1>
-                <p>{title}</p>
-                <p>{description}</p>
-                <p>{todo ? "true" : "false"}</p>
-                <p>{todoSet}</p>
+                <p>{Todo.selectedTodo.title}</p>
+                <p>{Todo.selectedTodo.description}</p>
+                <p>{Todo.selectedTodo.todo ? "true" : "false"}</p>
+                <p>{Todo.selectedTodo.todoSet}</p>
                 <p>{Todo.selectedTodo.day}</p>
-                <p>{isInCalendar ? "true" : "false"}</p>
+                <p>{Todo.selectedTodo.isInCalendar ? "true" : "false"}</p>
                 <button onClick={HandleClick} >Back</button>
                 <button onClick={() => setEdit(true)} >Edit</button>
                 </>

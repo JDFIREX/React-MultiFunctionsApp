@@ -4,10 +4,9 @@ import {Context} from "./../../UseReducer"
 import "./Nav.css"
 import {Logos} from "./../../UseReducer"
 
-const NavItem = ({state,a, setName,setHover,setItemCoords}) => {
+const NavItem = ({state,a, setName,setHover,setItemCoords,dispatch}) => {
 
     const ItemRef = useRef(null)
-    // console.log(state)
 
     const ShowItemName = (e) =>{
         setHover(true)
@@ -23,7 +22,13 @@ const NavItem = ({state,a, setName,setHover,setItemCoords}) => {
 
     return (
         <Link to={`/${a}`}>
-            <div className="nav_item" ref={ItemRef} onMouseEnter={ShowItemName} onMouseLeave={HideItemName}>
+            <div 
+                className="nav_item" 
+                ref={ItemRef} 
+                onMouseEnter={ShowItemName} 
+                onMouseLeave={HideItemName}
+                onClick={() => dispatch({type : "TOGGLEDESCRIPTIONEVENT"})}
+            >
                 <img src={Logos[state.logo]} alt={`logo ${a}`} />
             </div>
         </Link>
@@ -66,7 +71,7 @@ const Nav = () => {
             <div className="nav_list">
                 {
                     Object.keys(state).map((a,b) => {
-                        return <NavItem state={state[`${a}`]} a={a} key={b} setHover={setHover} setItemCoords={setItemCoords} setName={setName} />
+                        return <NavItem state={state[`${a}`]} a={a} key={b} setHover={setHover} dispatch={dispatch} setItemCoords={setItemCoords} setName={setName} />
                     })
                 }
             </div>

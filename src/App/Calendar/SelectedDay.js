@@ -6,11 +6,11 @@ import {DragDropContext,Droppable, Draggable} from "react-beautiful-dnd"
 
 export const AddNewEvent = () => {
 
+    const [state,dispatch] = useContext(Context)
     const [title,setTitle] = useState("")
     const [description,setDescription] = useState("")
     const [todo,setTodo] = useState(false)
     const [todoSet, setTodoSet ] = useState("")
-    const [state,dispatch] = useContext(Context)
         
 
     const ResetForm = (e) => {
@@ -36,8 +36,6 @@ export const AddNewEvent = () => {
         setDescription("")
         setTodoSet("")
         setTodo(false)
-        
-
     }
 
 
@@ -82,6 +80,18 @@ export const AddNewEvent = () => {
         </div>
     )
 }
+const EventInfo = ({state,edit,setEdit}) => (
+    <>
+        <h1>Day : {state.Calendar.selectDay}</h1>
+        <h1>Title : {state.Calendar.selectedDescriptionEvent.title}</h1>
+        <h1>Description : {state.Calendar.selectedDescriptionEvent.description}</h1>
+        <h1>todo : {state.Calendar.selectedDescriptionEvent.todo === false ? "false" : "true"}</h1>
+        <h1>todoSet : {state.Calendar.selectedDescriptionEvent.todoSet}</h1>
+        <button
+            onClick={() => setEdit(!edit)}
+        >Edit</button>
+    </>
+)
 
 export const DescriptionEvent= () => {
 
@@ -93,16 +103,9 @@ export const DescriptionEvent= () => {
     const [todoSet, setTodoSet ] = useState("")
     const [InCalendar,setInCalendar] = useState(state.Calendar.selectedDescriptionEvent.isInCalendar)
 
-
-
     useEffect(() => {
         setEdit(false)
-        setTitle(state.Calendar.selectedDescriptionEvent.title)
-        setDescription(state.Calendar.selectedDescriptionEvent.description)
-        setTodo(state.Calendar.selectedDescriptionEvent.todo)
-        setTodoSet(state.Calendar.selectedDescriptionEvent.todoSet)
-        setInCalendar(state.Calendar.selectedDescriptionEvent.isInCalendar)
-    },[state.Calendar.selectedDescriptionEvent])
+    },[])
 
     useEffect(() => {
         if(todo === false) {
@@ -138,16 +141,7 @@ export const DescriptionEvent= () => {
         <div className="DescriptionDay">
         {
             edit === false ? (
-                <>
-                <h1>Day : {state.Calendar.selectDay}</h1>
-                <h1>Title : {state.Calendar.selectedDescriptionEvent.title}</h1>
-                <h1>Description : {state.Calendar.selectedDescriptionEvent.description}</h1>
-                <h1>todo : {state.Calendar.selectedDescriptionEvent.todo === false ? "false" : "true"}</h1>
-                <h1>todoSet : {state.Calendar.selectedDescriptionEvent.todoSet}</h1>
-                <button
-                    onClick={() => setEdit(!edit)}
-                >Edit</button>
-                </>
+                <EventInfo state={state} edit={edit} setEdit={setEdit} />
             ) : (
                 <div>
                     <form onSubmit={SubmitEdit}>
@@ -171,32 +165,33 @@ export const DescriptionEvent= () => {
                                     <br />
                                     Todo set :
                                     <p>Normal</p>
-                                    {
-                                        todoSet === "normal" ? (
-                                            <input type="radio" name="set" value="normal" onChange={() => setTodoSet("")}  checked={true} />
-                                        ) : (
-                                            <input type="radio" name="set" value="normal" onChange={() => setTodoSet("normal")} checked={false} />
-                                        )
-                                    }
+                                    <input 
+                                        type="radio" 
+                                        name="set" 
+                                        value="normal" 
+                                        onChange={() => setTodoSet("normal")}
+                                        checked={todoSet === "normal"} 
+                                    />
+
                                     <br />
                                     <p>durning work</p>
-                                    {
-                                        todoSet === "durning work" ? (
-                                            <input type="radio" name="set" value="durning work" onChange={() => setTodoSet("")} checked={true} />
-                                        ) : (
-                                            <input type="radio" name="set" value="durning work" onChange={() => setTodoSet("durning work")} checked={false} />
-                                        )
-                                    }
+                                    <input 
+                                        type="radio" 
+                                        name="set" 
+                                        value="durning work" 
+                                        onChange={() => setTodoSet("durning work")}
+                                        checked={todoSet === "durning work"} 
+                                    />
                                     
                                     <br />
                                     <p>finished</p>
-                                    {
-                                        todoSet === "finished" ? (
-                                            <input type="radio" name="set" value="finished" onChange={() => setTodoSet("")} checked={true} />
-                                        ) : (
-                                            <input type="radio" name="set" value="finished" onChange={() => setTodoSet("finished")} checked={false} />
-                                        )
-                                    }
+                                    <input 
+                                        type="radio" 
+                                        name="set" 
+                                        value="finished" 
+                                        onChange={() => setTodoSet("finished")}
+                                        checked={todoSet === "finished"} 
+                                    />
                                     
                                 </label>
                                 <label htmlFor="inCalendar">
@@ -216,9 +211,6 @@ export const DescriptionEvent= () => {
 }
 
 const SelectedDayEvent = ({a,b,dispatch}) => {
-
-
-
     return (
         //
         <Draggable draggableId={`${a.id}`} index={b}>
@@ -251,20 +243,16 @@ export const SelectedDay =() => {
 
     const [state,dispatch] = useContext(Context)
 
-    console.log(state)
-
     const DragEnd = (e) => {
         let is = e.source.index;
         let ie = e.destination.index;
 
-
-        if(is === ie){
-            return;
-        }
+        if(is === ie)return;
 
         let item = state.Calendar.DayEvents[state.Calendar.selectDay][is]
         let newList = state.Calendar.DayEvents[state.Calendar.selectDay].filter((a,b) => b !== is)
         newList.splice(ie,0,item);
+
         dispatch({
             type : "CHANGEORDER",
             list : newList

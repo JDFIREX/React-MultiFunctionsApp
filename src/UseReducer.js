@@ -570,7 +570,7 @@ export const reducer = (state,action) => {
                 }
             }
 
-            return todoEditState
+            return {...todoEditState}
 
         default :
             return;

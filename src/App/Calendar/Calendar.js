@@ -80,30 +80,28 @@ const Days = () => {
 const Calendar = () => {
 
     const [state,dispatch] = useContext(Context)
-    const Calendar = state.Calendar;
 
     return (
         <>
         <SelectedDay />
-
         {
-            state.Calendar.addEvent ? (
+            state.Calendar.addEvent === true ? (
                 <AddNewEvent />
             ) : 
             state.Calendar.DescriptionEvent && state.Calendar.selectedDescriptionEvent ? (
                 <DescriptionEvent />
             ) : (
                 <div className="Calendar">
-                    <Btns show={Calendar.show} inner={Calendar.inner} dispatch={dispatch} />
-                    {Calendar.show === "days" && <Days /> }
+                    <Btns show={state.Calendar.show} inner={state.Calendar.inner} dispatch={dispatch} />
+                    {state.Calendar.show === "days" && <Days /> }
                     {
-                        Calendar.show === "days" ? (
+                        state.Calendar.show === "days" ? (
                             <GenerateCal />
                         ) : 
-                        Calendar.show === "months" ? (
+                        state.Calendar.show === "months" ? (
                             <GenerateMonths />
                         ) :
-                        Calendar.show === "years" && (
+                        state.Calendar.show === "years" && (
                             <GenerateYears />
                         )
                     }

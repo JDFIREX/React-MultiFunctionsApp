@@ -1,9 +1,7 @@
 import React, {useContext} from "react"
 import {Context,GetMonthName} from "./../../UseReducer"
 
-const MonthCell = ({x}) => {
-    const [state,dispatch] = useContext(Context)
-
+const MonthCell = ({x,dispatch}) => {
     return (
         <div className="Month" onClick={() => dispatch({type : "SELECTMONTH", monthid : x.monthId})} >
             {x.month}
@@ -11,14 +9,13 @@ const MonthCell = ({x}) => {
     )
 }
 
-const MonthRow = ({a}) => {
-
+const MonthRow = ({a,dispatch}) => {
     return (
         <div className="Month_row" >
             {
                 a.map(x => {
                     return (
-                        <MonthCell  key={`${x.year}-${x.month}`} x={x} />
+                        <MonthCell  key={`${x.year}-${x.month}`} x={x} dispatch={dispatch} />
                     )
                 })
             }
@@ -50,7 +47,7 @@ const GenerateMonths = () => {
         {
             months.map((a,b) => {
                 return(
-                    <MonthRow key={`${state.Calendar.Year}-Months-${b}`} a={a} />
+                    <MonthRow key={`${state.Calendar.Year}-Months-${b}`} a={a} dispatch={dispatch} />
                 )
             })
         }

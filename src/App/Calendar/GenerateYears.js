@@ -1,9 +1,7 @@
 import React, {useContext} from "react"
 import {Context} from "./../../UseReducer"
 
-const YearCell = ({x}) => {
-    const [state,dispatch] = useContext(Context)
-
+const YearCell = ({x,dispatch}) => {
     return (
         <div className="Year" onClick={() => dispatch({type : "SELECTYEAR", YearID : Number(x)})}>
             {x}
@@ -11,13 +9,13 @@ const YearCell = ({x}) => {
     )
 }
 
-const YearRow = ({a}) => {
+const YearRow = ({a,dispatch}) => {
     return(
         <div className="YearRow">
         {
             a.map(x => {
                 return (
-                    <YearCell x={x} key={x}/>
+                    <YearCell x={x} key={x} dispatch={dispatch} />
                 )
             })
         }
@@ -46,7 +44,7 @@ const GenerateYears = () => {
         {
             sy.map((a,b) => {
                 return (
-                    <YearRow key={`Year-row-${b}`} a={a} />
+                    <YearRow key={`Year-row-${b}`} a={a} dispatch={dispatch} />
                 )
             })
         }
