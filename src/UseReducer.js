@@ -398,7 +398,6 @@ export const reducer = (state,action) => {
                 }
             }
             let newEditedTodo = EDITEVENTstate.Todo;
-            console.log(editedEvent)
             
             
             if(editedEvent.todo && action.event.todo === false){
@@ -407,7 +406,7 @@ export const reducer = (state,action) => {
             if(editedEvent.todo === false && action.event.todo){
                 newEditedTodo[action.event.todoSet].push(action.event) 
             }
-            if(editedEvent.todo && action.event.todo){
+            if(editedEvent.todoSet !== action.event.todoSet){
                 newEditedTodo[editedEvent.todoSet] = newEditedTodo[editedEvent.todoSet].filter(a => a.id !== action.event.id)
                 newEditedTodo[action.event.todoSet].push(action.event) 
             }

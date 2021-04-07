@@ -3,6 +3,8 @@
     height: auto;
     display: flex;
     flex-direction: column;
+    background-color: #e7dcfd;
+    padding: 1rem;
 
     .Btns{
         width: 100%;
@@ -19,7 +21,7 @@
             justify-content: center;
 
             &:hover{
-                background-color: #242530;
+                background-color: #6771dd7c;
             }
         }
         .btn_inner_month,.btn_inner_year{
@@ -37,7 +39,7 @@
                 height: 90%;
             }
             &:hover{
-                background-color: #242530;
+                background-color: #6771dd7c;
             }
         }
         .btn_month,.btn_year{
@@ -81,15 +83,35 @@
                 color: black;
                 text-align: center;
                 padding-top: 5px;
+                .inner{
+                    position: relative;
+                    left: calc((100% - 2rem) / 2);
+                    width: 2rem;
+                    height: 2rem;
+                    border-radius: 100%;
+                    padding-top: .25rem;
+                    background-color: #5c3baab4;    
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;        
+                    p{
+                        margin-top: -20%;
+                        font-size: 90%;
+                    }
+                }
+
+                &:hover{
+                    background-color: #84f9ff80;
+                }
             }
             .not_this_month{
                 color : darkgray;
             }
             .currentDay{
-                background-color: #121318;
+                background-color: #e09f9fa4;
             }
             .selected{
-                border: 1px solid red;
+                background-color: #b4dfe0d2;
             }
         }
     }
@@ -107,13 +129,16 @@
 }
 
 .SelectedDay{
+    padding-top: 1rem;
     width: 500px;
     height: 672px;
     display: flex;
     flex-direction: column;
+    box-shadow: 0px 0px 10px 0px goldenrod;
     align-items: center;
-    border: 1px solid red;
     margin-right: 5rem;
+    border-radius: 5px;
+    background-color: #e7dcfd;
 
     .Options{
         width: 100%;
@@ -121,8 +146,9 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        border-bottom: 1px solid black;
-        border-top: 1px solid black;
+        margin-top: 1rem;
+        border-bottom: 1px solid goldenrod;
+        border-top: 1px solid goldenrod;
 
         img{
             height: 90%;
@@ -131,7 +157,6 @@
     .SelectDayMain{
         width: 100%;
         height: calc(100% - 3rem);
-        border: 1px solid blue;
         overflow-y: auto;
 
         .SeledDayItem{
@@ -143,7 +168,7 @@
             flex-direction: row;
             align-items: center;
             justify-content: space-between;
-            border: 1px solid green;
+            border-bottom: 1px solid goldenrod;
 
             img{
                 height: 80%;
@@ -156,11 +181,11 @@
 .AddNewEvent{
     width: 600px;
     height: 672px;
-    border: 1px solid red;
+    padding-top: 1rem;
     display: flex;
     flex-direction: column;
     align-items: center;
-    color: white;
+    background-color: #e7dcfd;
 
     form{
         width: 100%;
@@ -218,9 +243,7 @@
 .DescriptionDay{
     width: 600px;
     height: 672px;
-    border: 1px solid red;
-    color: white;
-
+    background-color: #e7dcfd;
     .edit{
         form{
             width: 100%;

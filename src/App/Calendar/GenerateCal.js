@@ -37,7 +37,16 @@ const Day = ({x,d,s,c}) => {
                 {x.day}
                 {
                     state.Calendar.DayEvents[d] && (
-                        <p>{state.Calendar.DayEvents[d].length === 0 ? "" : state.Calendar.DayEvents[d].length}</p>
+                        <>
+                            {
+                                state.Calendar.DayEvents[d].length > 0 && (
+                                    <div className="inner">
+                                        <p>{state.Calendar.DayEvents[d].length}</p>
+                                    </div>
+                                )
+
+                            }
+                        </>
                     )
                 }
         </div>

@@ -108,7 +108,7 @@ export const DescriptionEvent= () => {
     const [title,setTitle] = useState(state.Calendar.selectedDescriptionEvent.title)
     const [description,setDescription] = useState(state.Calendar.selectedDescriptionEvent.description)
     const [todo,setTodo] = useState(state.Calendar.selectedDescriptionEvent.todo)
-    const [todoSet, setTodoSet ] = useState("")
+    const [todoSet, setTodoSet ] = useState(state.Calendar.selectedDescriptionEvent.todoSet)
     const [InCalendar,setInCalendar] = useState(state.Calendar.selectedDescriptionEvent.isInCalendar)
 
     useEffect(() => {
@@ -144,6 +144,7 @@ export const DescriptionEvent= () => {
         setTodo(false)
         setTodoSet("")
     }
+
 
     return (
         <div className="DescriptionDay">
