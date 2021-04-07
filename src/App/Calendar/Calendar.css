@@ -1,14 +1,6 @@
 .Calendar {
   width: 600px;
-  height: auto;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  background-color: #e7dcfd;
+  background-color: #111a21;
   padding: 1rem;
 }
 
@@ -22,9 +14,6 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
           flex-direction: row;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
 }
 
 .Calendar .Btns .btn_inner, .Calendar .Btns .btn_inner_month, .Calendar .Btns .btn_inner_year {
@@ -42,7 +31,7 @@
 }
 
 .Calendar .Btns .btn_inner:hover, .Calendar .Btns .btn_inner_month:hover, .Calendar .Btns .btn_inner_year:hover {
-  background-color: #6771dd7c;
+  background-color: #ccd4dd;
 }
 
 .Calendar .Btns .btn_inner_month, .Calendar .Btns .btn_inner_year {
@@ -61,8 +50,8 @@
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  border-right: 1px solid #05031c;
-  border-left: 1px solid #05031c;
+  border-right: 1px solid #ccd4dd;
+  border-left: 1px solid #ccd4dd;
 }
 
 .Calendar .Btns .btn img, .Calendar .Btns .btn_month img, .Calendar .Btns .btn_year img {
@@ -70,7 +59,7 @@
 }
 
 .Calendar .Btns .btn:hover, .Calendar .Btns .btn_month:hover, .Calendar .Btns .btn_year:hover {
-  background-color: #6771dd7c;
+  background-color: #ccd4dd;
 }
 
 .Calendar .Btns .btn_month, .Calendar .Btns .btn_year {
@@ -78,7 +67,6 @@
 }
 
 .Calendar .days {
-  width: 100%;
   height: 3rem;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -87,8 +75,8 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
           flex-direction: row;
-  border-right: 1px solid #05031c;
-  border-left: 1px solid #05031c;
+  border-right: 1px solid #ccd4dd;
+  border-left: 1px solid #ccd4dd;
 }
 
 .Calendar .days p {
@@ -105,24 +93,6 @@
           justify-content: center;
 }
 
-.Calendar .cal, .Calendar .MonthsList, .Calendar .YearsList {
-  width: 100%;
-  height: auto;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-align: start;
-      -ms-flex-align: start;
-          align-items: flex-start;
-  -webkit-box-pack: start;
-      -ms-flex-pack: start;
-          justify-content: flex-start;
-}
-
 .Calendar .cal .cal_row, .Calendar .cal .Month_row, .Calendar .cal .YearRow, .Calendar .MonthsList .cal_row, .Calendar .MonthsList .Month_row, .Calendar .MonthsList .YearRow, .Calendar .YearsList .cal_row, .Calendar .YearsList .Month_row, .Calendar .YearsList .YearRow {
   width: 100%;
   height: 6rem;
@@ -137,9 +107,7 @@
 
 .Calendar .cal .cal_row .day, .Calendar .cal .cal_row .Month, .Calendar .cal .cal_row .Year, .Calendar .cal .Month_row .day, .Calendar .cal .Month_row .Month, .Calendar .cal .Month_row .Year, .Calendar .cal .YearRow .day, .Calendar .cal .YearRow .Month, .Calendar .cal .YearRow .Year, .Calendar .MonthsList .cal_row .day, .Calendar .MonthsList .cal_row .Month, .Calendar .MonthsList .cal_row .Year, .Calendar .MonthsList .Month_row .day, .Calendar .MonthsList .Month_row .Month, .Calendar .MonthsList .Month_row .Year, .Calendar .MonthsList .YearRow .day, .Calendar .MonthsList .YearRow .Month, .Calendar .MonthsList .YearRow .Year, .Calendar .YearsList .cal_row .day, .Calendar .YearsList .cal_row .Month, .Calendar .YearsList .cal_row .Year, .Calendar .YearsList .Month_row .day, .Calendar .YearsList .Month_row .Month, .Calendar .YearsList .Month_row .Year, .Calendar .YearsList .YearRow .day, .Calendar .YearsList .YearRow .Month, .Calendar .YearsList .YearRow .Year {
   width: calc(100% / 7);
-  height: 100%;
-  border: 1px solid black;
-  color: black;
+  border: 1px solid #ccd4dd;
   text-align: center;
   padding-top: 5px;
 }
@@ -150,38 +118,29 @@
   width: 2rem;
   height: 2rem;
   border-radius: 100%;
+  margin-top: .5rem;
   padding-top: .25rem;
-  background-color: #5c3baab4;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  background-color: #ccd4dd;
 }
 
 .Calendar .cal .cal_row .day .inner p, .Calendar .cal .cal_row .Month .inner p, .Calendar .cal .cal_row .Year .inner p, .Calendar .cal .Month_row .day .inner p, .Calendar .cal .Month_row .Month .inner p, .Calendar .cal .Month_row .Year .inner p, .Calendar .cal .YearRow .day .inner p, .Calendar .cal .YearRow .Month .inner p, .Calendar .cal .YearRow .Year .inner p, .Calendar .MonthsList .cal_row .day .inner p, .Calendar .MonthsList .cal_row .Month .inner p, .Calendar .MonthsList .cal_row .Year .inner p, .Calendar .MonthsList .Month_row .day .inner p, .Calendar .MonthsList .Month_row .Month .inner p, .Calendar .MonthsList .Month_row .Year .inner p, .Calendar .MonthsList .YearRow .day .inner p, .Calendar .MonthsList .YearRow .Month .inner p, .Calendar .MonthsList .YearRow .Year .inner p, .Calendar .YearsList .cal_row .day .inner p, .Calendar .YearsList .cal_row .Month .inner p, .Calendar .YearsList .cal_row .Year .inner p, .Calendar .YearsList .Month_row .day .inner p, .Calendar .YearsList .Month_row .Month .inner p, .Calendar .YearsList .Month_row .Year .inner p, .Calendar .YearsList .YearRow .day .inner p, .Calendar .YearsList .YearRow .Month .inner p, .Calendar .YearsList .YearRow .Year .inner p {
-  margin-top: -20%;
   font-size: 90%;
 }
 
 .Calendar .cal .cal_row .day:hover, .Calendar .cal .cal_row .Month:hover, .Calendar .cal .cal_row .Year:hover, .Calendar .cal .Month_row .day:hover, .Calendar .cal .Month_row .Month:hover, .Calendar .cal .Month_row .Year:hover, .Calendar .cal .YearRow .day:hover, .Calendar .cal .YearRow .Month:hover, .Calendar .cal .YearRow .Year:hover, .Calendar .MonthsList .cal_row .day:hover, .Calendar .MonthsList .cal_row .Month:hover, .Calendar .MonthsList .cal_row .Year:hover, .Calendar .MonthsList .Month_row .day:hover, .Calendar .MonthsList .Month_row .Month:hover, .Calendar .MonthsList .Month_row .Year:hover, .Calendar .MonthsList .YearRow .day:hover, .Calendar .MonthsList .YearRow .Month:hover, .Calendar .MonthsList .YearRow .Year:hover, .Calendar .YearsList .cal_row .day:hover, .Calendar .YearsList .cal_row .Month:hover, .Calendar .YearsList .cal_row .Year:hover, .Calendar .YearsList .Month_row .day:hover, .Calendar .YearsList .Month_row .Month:hover, .Calendar .YearsList .Month_row .Year:hover, .Calendar .YearsList .YearRow .day:hover, .Calendar .YearsList .YearRow .Month:hover, .Calendar .YearsList .YearRow .Year:hover {
-  background-color: #84f9ff80;
+  background-color: #ccd4dd;
 }
 
 .Calendar .cal .cal_row .not_this_month, .Calendar .cal .Month_row .not_this_month, .Calendar .cal .YearRow .not_this_month, .Calendar .MonthsList .cal_row .not_this_month, .Calendar .MonthsList .Month_row .not_this_month, .Calendar .MonthsList .YearRow .not_this_month, .Calendar .YearsList .cal_row .not_this_month, .Calendar .YearsList .Month_row .not_this_month, .Calendar .YearsList .YearRow .not_this_month {
-  color: darkgray;
+  color: #ccd4dd;
 }
 
 .Calendar .cal .cal_row .currentDay, .Calendar .cal .Month_row .currentDay, .Calendar .cal .YearRow .currentDay, .Calendar .MonthsList .cal_row .currentDay, .Calendar .MonthsList .Month_row .currentDay, .Calendar .MonthsList .YearRow .currentDay, .Calendar .YearsList .cal_row .currentDay, .Calendar .YearsList .Month_row .currentDay, .Calendar .YearsList .YearRow .currentDay {
-  background-color: #e09f9fa4;
+  background-color: #a9081b9c;
 }
 
 .Calendar .cal .cal_row .selected, .Calendar .cal .Month_row .selected, .Calendar .cal .YearRow .selected, .Calendar .MonthsList .cal_row .selected, .Calendar .MonthsList .Month_row .selected, .Calendar .MonthsList .YearRow .selected, .Calendar .YearsList .cal_row .selected, .Calendar .YearsList .Month_row .selected, .Calendar .YearsList .YearRow .selected {
-  background-color: #b4dfe0d2;
+  background-color: #612525b9;
 }
 
 .Calendar .MonthsList .Month_row, .Calendar .MonthsList .YearRow, .Calendar .YearsList .Month_row, .Calendar .YearsList .YearRow {
@@ -189,15 +148,6 @@
 }
 
 .Calendar .MonthsList .Month_row .Month, .Calendar .MonthsList .Month_row .Year, .Calendar .MonthsList .YearRow .Month, .Calendar .MonthsList .YearRow .Year, .Calendar .YearsList .Month_row .Month, .Calendar .YearsList .Month_row .Year, .Calendar .YearsList .YearRow .Month, .Calendar .YearsList .YearRow .Year {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
   width: calc(100% / 4);
 }
 
@@ -212,14 +162,14 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  -webkit-box-shadow: 0px 0px 10px 0px goldenrod;
-          box-shadow: 0px 0px 10px 0px goldenrod;
+  -webkit-box-shadow: 0px 0px 10px 0px #111a21;
+          box-shadow: 0px 0px 10px 0px #111a21;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
   margin-right: 5rem;
   border-radius: 5px;
-  background-color: #e7dcfd;
+  background-color: #111a21;
 }
 
 .SelectedDay .Options {
@@ -235,8 +185,8 @@
       -ms-flex-align: center;
           align-items: center;
   margin-top: 1rem;
-  border-bottom: 1px solid goldenrod;
-  border-top: 1px solid goldenrod;
+  border-bottom: 1px solid #ccd4dd;
+  border-top: 1px solid #ccd4dd;
 }
 
 .SelectedDay .Options img {
@@ -245,7 +195,6 @@
 
 .SelectedDay .SelectDayMain {
   width: 100%;
-  height: calc(100% - 3rem);
   overflow-y: auto;
 }
 
@@ -253,7 +202,6 @@
   width: 100%;
   height: 3rem;
   padding: 0.2rem 0.5rem;
-  z-index: 20;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -267,7 +215,7 @@
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  border-bottom: 1px solid goldenrod;
+  border-bottom: 1px solid #ccd4dd;
 }
 
 .SelectedDay .SelectDayMain .SeledDayItem img {
@@ -277,37 +225,19 @@
 
 .AddNewEvent {
   width: 600px;
-  height: 672px;
+  height: 704px;
   padding-top: 1rem;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  background-color: #e7dcfd;
+  text-align: center;
+  background-color: #111a21;
 }
 
 .AddNewEvent form {
   width: 100%;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  padding: 0 10%;
 }
 
 .AddNewEvent form label {
-  width: 80%;
+  width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -329,16 +259,6 @@
 
 .AddNewEvent form .set {
   width: 100%;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
 }
 
 .AddNewEvent form .set div {
@@ -353,13 +273,10 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  text-align: start;
 }
 
 .AddNewEvent form .set div p {
-  position: relative;
   width: 10rem;
 }
 
@@ -379,8 +296,9 @@
 
 .DescriptionDay {
   width: 600px;
-  height: 672px;
-  background-color: #e7dcfd;
+  height: 704px;
+  padding-top: 1rem;
+  background-color: #111a21;
 }
 
 .DescriptionDay .edit form {

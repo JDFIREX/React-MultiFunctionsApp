@@ -407,7 +407,7 @@ export const reducer = (state,action) => {
                 newEditedTodo[action.event.todoSet].push(action.event) 
             }
             if(editedEvent.todoSet !== action.event.todoSet){
-                newEditedTodo[editedEvent.todoSet] = newEditedTodo[editedEvent.todoSet].filter(a => a.id !== action.event.id)
+                if(newEditedTodo[editedEvent.todoSet]) newEditedTodo[editedEvent.todoSet] = newEditedTodo[editedEvent.todoSet].filter(a => a.id !== action.event.id)
                 newEditedTodo[action.event.todoSet].push(action.event) 
             }
             if(editedEvent.isInCalendar && action.event.isInCalendar === false){
