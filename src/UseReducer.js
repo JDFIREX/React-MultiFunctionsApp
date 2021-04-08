@@ -307,29 +307,32 @@ export const reducer = (state,action) => {
                 }
             }
         // ADDNEWEVENT
-        case "ADDNEWEVENT" : 
-            let newEvent = state.Calendar.DayEvents
-            let actionevent = action.event;
-            if(actionevent.todoSet === "" && actionevent.todo){
-                actionevent.todo = false;
-            }
-            if(!newEvent[action.day]){
-                newEvent[action.day] = []
-            }
-            newEvent[action.day].push(action.event)
+        case "ADDNEWEVENT" :
+            let neweventstate = state;
 
-            let neweventstate = {
-                ...state,
-                Calendar : {
-                    ...state.Calendar,
-                    addEvent : !state.Calendar.addEvent,
-                    eventId : action.event.id,
-                    DescriptionEvent : false,
-                    selectedDescriptionEvent : null,
-                    DayEvents : newEvent
+            if(action.event.isInCalendar){
+                let newEvent = state.Calendar.DayEvents
+                if(action.event.todoSet === "" && action.event.todo){
+                    action.event.todo = false;
                 }
-            }
+                if(!newEvent[action.event.day]){
+                    newEvent[action.event.day] = []
+                }
+                newEvent[action.event.day].push(action.event)
+    
+                neweventstate = {
+                    ...neweventstate,
+                    Calendar : {
+                        ...neweventstate.Calendar,
+                        addEvent : !neweventstate.Calendar.addEvent,
+                        DescriptionEvent : false,
+                        selectedDescriptionEvent : null,
+                        DayEvents : newEvent
+                    }
+                }
+            } 
             if(action.event.todo){
+                console.log(action.event)
                 let todosetlist;
                 if(!neweventstate.Todo[action.event.todoSet]){
                     todosetlist = []
@@ -346,7 +349,13 @@ export const reducer = (state,action) => {
                 }
             }
 
-            return neweventstate;
+            return {
+                ...neweventstate,
+                Calendar : {
+                    ...neweventstate.Calendar,
+                    eventId : action.event.id,
+                }
+            };
 
         // SELECTEVENT
         case "SELECTEVENT" :
@@ -402,11 +411,9 @@ export const reducer = (state,action) => {
             
             if(editedEvent.todo && action.event.todo === false){
                 newEditedTodo[editedEvent.todoSet] = newEditedTodo[editedEvent.todoSet].filter(a => a.id !== action.event.id)
-            }
-            if(editedEvent.todo === false && action.event.todo){
+            }else if(editedEvent.todo === false && action.event.todo){
                 newEditedTodo[action.event.todoSet].push(action.event) 
-            }
-            if(editedEvent.todoSet !== action.event.todoSet){
+            }else if(editedEvent.todoSet !== action.event.todoSet){
                 if(newEditedTodo[editedEvent.todoSet]) newEditedTodo[editedEvent.todoSet] = newEditedTodo[editedEvent.todoSet].filter(a => a.id !== action.event.id)
                 newEditedTodo[action.event.todoSet].push(action.event) 
             }

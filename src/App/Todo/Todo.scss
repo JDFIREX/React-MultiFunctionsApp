@@ -1,26 +1,225 @@
 .Todo{
-    border: 1px solid blue;
     width: 100%;
     max-width: 1920px;
     min-width: 1800px;
-    padding: 0 2vw;
+    box-sizing: border-box;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 
     .TodoSection{
-        border: 1px solid red;
         width: 32%;
+        height: 60vh;
+        min-height: 500px;
+        overflow-y: auto;
         margin: 0 1rem;
-        padding: 1rem .5rem;
+        padding: 1rem 2rem;
+        background-color: #111a21;
 
 
         h1{
-            border-bottom: 1px solid yellow;
+            border-bottom: 1px solid #ccd4dd;
         }
         div{
             color: white;
-            border-bottom: 1px solid green;
+            border-bottom: 1px solid #ccd4dd;
+        }
+    }
+}
+
+
+
+.infoTOdoDescription{
+    border-radius: 15px;
+    width: 600px;
+    height: auto;
+    padding: 1rem;
+    text-align: start;
+    background-color: #111a21;
+    box-shadow: 0px 0px 10px 0px #A9081C ;
+
+    button{
+        margin-top: 2rem;
+        padding: .2rem 3rem;
+        margin-right: 2rem;
+    }
+}
+
+.editTodo{
+    border-radius: 15px;
+    width: 600px;
+    height: 704px;
+    padding-top: 1rem;
+    text-align: center;
+    background-color: #111a21;
+    box-shadow: 0px 0px 10px 0px #A9081C ;
+
+
+    form{
+        width: 100%;
+        padding: 0 5%;
+
+        label{
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            input,textarea{
+                width: 100%;
+                padding: .2rem;
+                text-align: center;
+                margin: 1rem 0;
+                color: black;
+            }
+        }
+        .cal{
+            margin-left: calc((100% - 15rem) / 2);
+            width: 15rem;
+            margin-top: -2rem;
+            display: flex;
+            flex-direction: row;
+            input{
+                margin-left: 3.15rem;
+                width: 1rem;
+            }
+        }
+        .todo{
+            display: flex;
+            flex-direction: row;
+            margin-left: calc((100% - 15rem) / 2);
+            width: 15rem;
+            input{
+                margin-left: 9.35rem;
+                width: 1rem;
+            }
+        }
+        .set{
+            width: 100%;
+            div{
+                width: 15rem;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                text-align: start;
+
+                p{
+                    width: 10rem;
+                }
+                input{
+                    margin-left: 1.75rem;
+                    width: 1rem;
+                    height: 1rem;
+                }
+            }
+        }
+        .setcal{
+            margin-left: calc((100% - 15rem) / 2);
+            width: 13rem;
+        }
+        .save{
+            margin-top: 1rem;
+            padding: .3rem 1.2rem;
+        }
+        
+    }
+    .btns{
+        margin-top: 1rem;
+        button{
+            padding: .3rem 1.2rem;
+            margin: 0 1rem;
+        }
+    }
+}
+
+.addNew{
+    position: absolute;
+    bottom: 2rem;
+    width: 10rem;
+    height: 3rem;
+    background-color: #111a21;
+    border-radius: 9in;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+
+    img{
+        height: 90%;
+    }
+
+    &:hover{
+        background-color: #0b1116;
+    }
+}
+
+.AddNewTodo{
+    border-radius: 15px;
+    width: 600px;
+    height: 704px;
+    padding-top: 1rem;
+    text-align: center;
+    background-color: #111a21;
+    box-shadow: 0px 0px 10px 0px #A9081C ;
+
+    form{
+        width: 100%;
+        padding: 0 5%;
+
+        label{
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            input,textarea{
+                width: 100%;
+                padding: .2rem;
+                text-align: center;
+                margin: 1rem 0;
+                color: black;
+            }
+        }
+        .set{
+            width: 100%;
+            div{
+                width: 13rem;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                text-align: start;
+
+                p{
+                    width: 10rem;
+                }
+                input{
+                    margin-left: 1.75rem;
+                    width: 1rem;
+                    height: 1rem;
+                }
+            }
+        }
+        .cal{
+            margin-left: calc((100% - 13rem) / 2);
+            width: 13rem;
+            margin-top: 1rem;
+            display: flex;
+            flex-direction: row;
+            input{
+                margin-left: 1rem;
+                width: 1rem;
+            }
+        }
+        .setcal{
+            margin-left: 25%;
+            width: 50%;
+        }
+    }
+    .btns{
+        margin-top: 2rem;
+        button{
+            padding: .3rem 1.2rem;
+            margin: 0 1rem;
         }
     }
 }

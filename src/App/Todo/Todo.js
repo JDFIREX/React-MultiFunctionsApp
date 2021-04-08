@@ -1,7 +1,9 @@
-import React, {useContext, useState,useEffect} from "react"
+import React, {useContext, useState} from "react"
 import {Context} from "./../../UseReducer"
 import {DragDropContext,Droppable, Draggable} from "react-beautiful-dnd"
+import {TodoDescription, AddNew} from "./TodoDescription"
 import "./Todo.css"
+import plus from "./../../images/plus.svg"
 
 const TodoItem = ({a,b,dispatch,setTodoDescription}) => {
 
@@ -45,7 +47,7 @@ const DroppableItem = ({Todo,item,dispatch,setTodoDescription}) => {
                         {...provided.droppableProps}
                         ref={provided.innerRef}
                     >
-                        <h1>Todo durning work</h1>
+                        <h1>Todo {item}</h1>
                         {
                             Todo[item].map((a,b ) => <TodoItem key={a.id} b={b} a={a} dispatch={dispatch} setTodoDescription={setTodoDescription} /> )
                         }
@@ -110,220 +112,53 @@ const DragDropEvent = ({setTodoDescription}) => {
         </DragDropContext>
     )
 }
-const EditTodo = ({setEdit,setTodoDescription}) => {
 
-    const [state,dispatch] = useContext(Context)
-    const Todo = state.Todo
-    const [title,setTitle] = useState(Todo.selectedTodo.title)
-    const [description,setdescription] = useState(Todo.selectedTodo.description)
-    const [todo,settodo] = useState(Todo.selectedTodo.todo)
-    const [todoSet,settodoSet] = useState(Todo.selectedTodo.todoSet)
-    const [isInCalendar,setisInCalendar] = useState(Todo.selectedTodo.isInCalendar)
-    const [day, setDay] = useState(Todo.selectedTodo.day) 
-    const [cal, setCal] = useState()
-
-    const GetDay = (d,s) => {
-        d = d.split("-")
-        let m = d[1];
-        let dd = d[2]
-        m = m.split("")
-        dd = dd.split("")
-        if(s === "unshift"){
-            if(m[0] !== "0" && m.length === 1) m.unshift("0")
-            if(dd[0] !== "0" && dd.length === 1) dd.unshift("0")
-        }else {
-            if(m[0] === "0" && m.length === 2) m.shift()
-            if(dd[0] === "0" && dd.length === 2) dd.shift()
-        }
-        m = m.join("")
-        dd = dd.join("")
-        d[1] = m;
-        d[2] = dd;
-        d = d.join("-")
-        return d;
-    }
-
-    useEffect(() => {
-        let d;
-        !day ? d = state.Calendar.currentDay : d = day
-        d = GetDay(d,"unshift")
-        setCal(d)
-    }, [day,state.Calendar.currentDay,cal])
-
-    const ChangeDay = (e,) => {
-        let d = e.target.value;
-        d = GetDay(d,"shift")
-        setDay(d)
-    }
-
-
-    const HandleClick = () => {
-        setTitle(Todo.selectedTodo.title)
-        setdescription(Todo.selectedTodo.description)
-        settodo(Todo.selectedTodo.todo)
-        settodoSet(Todo.selectedTodo.todoSet)
-        setisInCalendar(Todo.selectedTodo.isInCalendar)
-        setDay(Todo.selectedTodo.day)
-    }
-
-    const SubmitEdit = (e) => {
-        (todo === false) && settodoSet("")
-        if(todo === false && isInCalendar === false){
-            alert("todo or todo In Calendar must be chacked")
-            settodo(Todo.selectedTodo.todo)
-            settodoSet(Todo.selectedTodo.todoSet)
-            setisInCalendar(Todo.selectedTodo.isInCalendar)
-            setDay(Todo.selectedTodo.day)
-        }else {
-            dispatch({
-                type : "SUBMITTODOEDIT",
-                todo : {
-                    day : isInCalendar === false ? "" : day ? day : state.Calendar.currentDay,
-                    id :Todo.selectedTodo.id,
-                    title,
-                    description,
-                    todo,
-                    todoSet,
-                    isInCalendar
-                }
-            })
-            if(todo === false) setTodoDescription(false)
-            setEdit(false)
-        }
-    }
-
-    return (
-        <div className="editTodo">
-            <h1>Edit todo id {Todo.selectedTodo.id}</h1>
-            <form onSubmit={SubmitEdit}>
-                <label htmlFor="title" className="title">
-                    <p>Todo Title</p>
-                    <input type="text" name="title" onChange={(e) => setTitle(e.target.value)} value={title}/>
-                </label>
-                <label htmlFor="description" className="description">
-                    <p>Todo Description</p>
-                    <textarea style={{resize: "none"}} type="text" name="description" onChange={(e) => setdescription(e.target.value)} value={description}/>
-                </label>
-                <br />
-                <label htmlFor="inCalendar">
-                    todo in calendar :
-                    <input type="checkbox" name="todo" onChange={(e) => setisInCalendar(e.target.checked)} checked={isInCalendar} />
-                </label>
-                {
-                    isInCalendar && (
-                        <label htmlFor="isincalendar">
-                            day in calendar :
-                            <input type="date" name="isincalendar" value={cal} onChange={ChangeDay} />
-                        </label>
-                    )
-                }
-                <label htmlFor="todo" className="todo">
-                    <p>todo</p>
-                    <input type="checkbox" name="todo" onChange={(e) => settodo(e.target.checked)} checked={todo} />
-                </label>
-                {
-                    todo && (
-                        <>
-                        <label htmlFor="set">
-                            <br />
-                            Todo set :
-                            <p>Normal</p>
-                            <input 
-                                type="radio" 
-                                name="set" 
-                                value="normal" 
-                                onChange={() => settodoSet("normal")}  
-                                checked={todoSet === "normal"} 
-                            />
-
-                            <br />
-                            <p>durning work</p>
-                            <input 
-                                type="radio" 
-                                name="set" 
-                                value="durning work" 
-                                onChange={() => settodoSet("durning work")}  
-                                checked={todoSet === "durning work"} 
-                            />
-        
-                            <br />
-                            <p>finished</p>
-                            <input 
-                                type="radio" 
-                                name="set" 
-                                value="finished" 
-                                onChange={() => settodoSet("finished")}  
-                                checked={todoSet === "finished"} 
-                            />
-                            
-                        </label>
-                        </>
-                    )
-                }
-                <button type="submit">save</button>
-            </form>
-            <button onClick={() => setEdit(false)}>back</button>
-            <button onClick={HandleClick}>Restart</button>
-        </div>
-    )
-}
-const TodoDescription = ({Todo,setTodoDescription}) => {
-
-    const [edit, setEdit] = useState(false)
-
-    const HandleClick = () => {
-        Todo.selectedTodo = null;
-        setTodoDescription(false)
-    }
-
-
+const AddBtn = ({setAdd, add}) => {
     return (
         <>
-        {
-            !edit ? (
-                <>
-                <h1>Todo Description id {Todo.selectedTodo.id} </h1>
-                <p>{Todo.selectedTodo.title}</p>
-                <p>{Todo.selectedTodo.description}</p>
-                <p>{Todo.selectedTodo.todo ? "true" : "false"}</p>
-                <p>{Todo.selectedTodo.todoSet}</p>
-                <p>{Todo.selectedTodo.day}</p>
-                <p>{Todo.selectedTodo.isInCalendar ? "true" : "false"}</p>
-                <button onClick={HandleClick} >Back</button>
-                <button onClick={() => setEdit(true)} >Edit</button>
-                </>
-            ) : (
-                <EditTodo setEdit={setEdit} setTodoDescription={setTodoDescription} />
-            ) 
-        }
-        </>
+            <div className="addNew" onClick={() => setAdd(!add)}>
+                <img src={plus} alt="add new todo" />
+            </div>
+        </>  
+
     )
 }
+
 
 const Todo= () => {
 
     const [state,dispatch] = useContext(Context)
     const [Tododescription, setTodoDescription] = useState(false)
+    const [add, setAdd] = useState(false)
     const Todo = state.Todo
 
+    console.log(Todo)
 
+    if(add){
+        return (
+            <>
+                <AddNew setAdd={setAdd} />
+                <AddBtn setAdd={setAdd} add={add} />
+            </>
+        )
+    }
 
-    return (
-        <>
-            {
-                Tododescription ? (
-                    <div className="TodoDescription">
-                        <TodoDescription Todo={Todo} dispatch={dispatch}  setTodoDescription={setTodoDescription}/>
-                    </div>
-                    ) : (
-                        <div className="Todo">
-                            <DragDropEvent setTodoDescription={setTodoDescription}  />
-                        </div>
-                    )
-            }
-        </>  
-
-    )
+    if(Tododescription){
+        return (
+            <div className="TodoDescription">
+                <TodoDescription Todo={Todo} dispatch={dispatch}  setTodoDescription={setTodoDescription}/>
+            </div>
+        )
+    } else {
+        return(
+            <>
+                <div className="Todo">
+                    <DragDropEvent setTodoDescription={setTodoDescription}  />
+                </div>
+                <AddBtn setAdd={setAdd} add={add} />
+            </>
+        )
+    }
 }
 
 

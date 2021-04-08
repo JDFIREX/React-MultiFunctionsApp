@@ -1,9 +1,9 @@
 .Todo {
-  border: 1px solid blue;
   width: 100%;
   max-width: 1920px;
   min-width: 1800px;
-  padding: 0 2vw;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -17,18 +17,285 @@
 }
 
 .Todo .TodoSection {
-  border: 1px solid red;
   width: 32%;
+  height: 60vh;
+  min-height: 500px;
+  overflow-y: auto;
   margin: 0 1rem;
-  padding: 1rem .5rem;
+  padding: 1rem 2rem;
+  background-color: #111a21;
 }
 
 .Todo .TodoSection h1 {
-  border-bottom: 1px solid yellow;
+  border-bottom: 1px solid #ccd4dd;
 }
 
 .Todo .TodoSection div {
   color: white;
-  border-bottom: 1px solid green;
+  border-bottom: 1px solid #ccd4dd;
+}
+
+.infoTOdoDescription {
+  border-radius: 15px;
+  width: 600px;
+  height: auto;
+  padding: 1rem;
+  text-align: start;
+  background-color: #111a21;
+  -webkit-box-shadow: 0px 0px 10px 0px #A9081C;
+          box-shadow: 0px 0px 10px 0px #A9081C;
+}
+
+.infoTOdoDescription button {
+  margin-top: 2rem;
+  padding: .2rem 3rem;
+  margin-right: 2rem;
+}
+
+.editTodo {
+  border-radius: 15px;
+  width: 600px;
+  height: 704px;
+  padding-top: 1rem;
+  text-align: center;
+  background-color: #111a21;
+  -webkit-box-shadow: 0px 0px 10px 0px #A9081C;
+          box-shadow: 0px 0px 10px 0px #A9081C;
+}
+
+.editTodo form {
+  width: 100%;
+  padding: 0 5%;
+}
+
+.editTodo form label {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.editTodo form label input, .editTodo form label textarea {
+  width: 100%;
+  padding: .2rem;
+  text-align: center;
+  margin: 1rem 0;
+  color: black;
+}
+
+.editTodo form .cal {
+  margin-left: calc((100% - 15rem) / 2);
+  width: 15rem;
+  margin-top: -2rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+.editTodo form .cal input {
+  margin-left: 3.15rem;
+  width: 1rem;
+}
+
+.editTodo form .todo {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  margin-left: calc((100% - 15rem) / 2);
+  width: 15rem;
+}
+
+.editTodo form .todo input {
+  margin-left: 9.35rem;
+  width: 1rem;
+}
+
+.editTodo form .set {
+  width: 100%;
+}
+
+.editTodo form .set div {
+  width: 15rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  text-align: start;
+}
+
+.editTodo form .set div p {
+  width: 10rem;
+}
+
+.editTodo form .set div input {
+  margin-left: 1.75rem;
+  width: 1rem;
+  height: 1rem;
+}
+
+.editTodo form .setcal {
+  margin-left: calc((100% - 15rem) / 2);
+  width: 13rem;
+}
+
+.editTodo form .save {
+  margin-top: 1rem;
+  padding: .3rem 1.2rem;
+}
+
+.editTodo .btns {
+  margin-top: 1rem;
+}
+
+.editTodo .btns button {
+  padding: .3rem 1.2rem;
+  margin: 0 1rem;
+}
+
+.addNew {
+  position: absolute;
+  bottom: 2rem;
+  width: 10rem;
+  height: 3rem;
+  background-color: #111a21;
+  border-radius: 9in;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border: none;
+}
+
+.addNew img {
+  height: 90%;
+}
+
+.addNew:hover {
+  background-color: #0b1116;
+}
+
+.AddNewTodo {
+  border-radius: 15px;
+  width: 600px;
+  height: 704px;
+  padding-top: 1rem;
+  text-align: center;
+  background-color: #111a21;
+  -webkit-box-shadow: 0px 0px 10px 0px #A9081C;
+          box-shadow: 0px 0px 10px 0px #A9081C;
+}
+
+.AddNewTodo form {
+  width: 100%;
+  padding: 0 5%;
+}
+
+.AddNewTodo form label {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.AddNewTodo form label input, .AddNewTodo form label textarea {
+  width: 100%;
+  padding: .2rem;
+  text-align: center;
+  margin: 1rem 0;
+  color: black;
+}
+
+.AddNewTodo form .set {
+  width: 100%;
+}
+
+.AddNewTodo form .set div {
+  width: 13rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  text-align: start;
+}
+
+.AddNewTodo form .set div p {
+  width: 10rem;
+}
+
+.AddNewTodo form .set div input {
+  margin-left: 1.75rem;
+  width: 1rem;
+  height: 1rem;
+}
+
+.AddNewTodo form .cal {
+  margin-left: calc((100% - 13rem) / 2);
+  width: 13rem;
+  margin-top: 1rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+.AddNewTodo form .cal input {
+  margin-left: 1rem;
+  width: 1rem;
+}
+
+.AddNewTodo form .setcal {
+  margin-left: 25%;
+  width: 50%;
+}
+
+.AddNewTodo .btns {
+  margin-top: 2rem;
+}
+
+.AddNewTodo .btns button {
+  padding: .3rem 1.2rem;
+  margin: 0 1rem;
 }
 /*# sourceMappingURL=Todo.css.map */
